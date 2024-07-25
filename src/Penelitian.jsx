@@ -226,7 +226,7 @@ export default function Penelitian() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 p-5 m-5 md:px-10 max-w-6xl mx-auto">
-            <Link to="/formulir-penelitian/survei">
+            <Link to="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi">
               <button className="bg-[#86B6F6] text-white px-6 py-7 rounded-lg shadow-lg hover:bg-blue-500 transition duration-300 w-full text-center font-medium text-lg">
                 Formulir Permohonan Rekomendasi Penelitian/Observasi/
                 <span className="block md:inline">

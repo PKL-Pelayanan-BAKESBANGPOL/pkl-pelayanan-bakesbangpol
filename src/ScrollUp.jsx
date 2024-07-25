@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { IoIosArrowUp } from "react-icons/io";
 
 export default function ScrollUp() {
   const [showButton, setShowButton] = useState(false);
@@ -31,7 +31,7 @@ export default function ScrollUp() {
           onClick={scrollToTop}
           className="fixed bottom-10 right-10 bg-[#86B6F6] text-white p-3 rounded-full shadow-lg hover:bg-blue-500 transition duration-300 focus:ring-2"
         >
-          <FaArrowUp className="w-6 h-6 hover:animate-moveIcon" />
+          <IoIosArrowUp className="w-6 h-6 hover:animate-moveIcon" />
         </button>
       )}
     </>

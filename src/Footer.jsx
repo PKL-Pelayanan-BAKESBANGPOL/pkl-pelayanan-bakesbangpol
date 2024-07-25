@@ -1,8 +1,8 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Bakesbangpol from "./assets/Logo Bakesbangpol.png";
-import { useMediaQuery } from "react-responsive";
 
 export default function Footer() {
   const isMobile = useMediaQuery({ maxWidth: 767 });

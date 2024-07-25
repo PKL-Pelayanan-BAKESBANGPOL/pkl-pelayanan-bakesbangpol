@@ -1336,6 +1336,8 @@ export default function FormulirMagang() {
       {/* ScrollUp Button */}
       {/* {isMobile ? "" : <ScrollUp />} */}
       <ScrollUp />
+
+      {/* Footer Section */}
       <Footer />
     </div>
   );

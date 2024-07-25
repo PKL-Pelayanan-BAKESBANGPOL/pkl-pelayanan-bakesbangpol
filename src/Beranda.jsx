@@ -57,39 +57,6 @@ export default function Beranda() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      {/* <div className="relative min-h-screen bg-gray-100">
-        <img
-          src={Header}
-          className="absolute inset-0 object-cover w-full h-full opacity-15"
-          alt="Header Image"
-        />
-        <div className="max-w-6xl mx-auto px-8 py-16 md:py-28 flex flex-col md:flex-row items-center justify-between z-10">
-          <div className="text-center md:text-left md:w-1/2 mb-8 md:mb-0 order-2 md:order-1">
-            <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6">
-              Layanan
-            </h1>
-            <h2 className="text-3xl md:text-6xl font-bold mb-7 md:mb-9">
-              BAKESBANGPOL
-            </h2>
-            <p className="text-gray-500 text-lg md:text-xl font-medium mb-6">
-              Akses mudah dan cepat ke berbagai layanan <br /> yang disediakan
-              oleh Badan Kesatuan Bangsa dan Politik Jawa Timur
-            </p>
-            <button className="bg-[#2A629A] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#003285] transition duration-300 inline-block">
-              Kunjungi Laman
-            </button>
-          </div>
-          <div className="md:w-1/2 order-1 md:order-2 mb-4 md:mb-0">
-            <img
-              src={Bakesbangpol}
-              alt="Logo Bakesbangpol"
-              className="w-full md:w-auto h-auto"
-            />
-          </div>
-        </div>
-      </div> */}
-
       {/* Grid Section */}
       <div id="grid-section" className="bg-[#EEF5FF] py-16">
         <div className="max-w-6xl mx-auto px-5 md:px-10">

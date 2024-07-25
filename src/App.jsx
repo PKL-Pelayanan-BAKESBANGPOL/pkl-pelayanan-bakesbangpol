@@ -12,7 +12,7 @@ export default function App() {
         <Route path="/" element={<Beranda />} />
         <Route path="/persyaratan-penelitian" element={<Penelitian />} />
         <Route
-          path="/formulir-penelitian/survei"
+          path="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi"
           element={<FormulirPenelitian />}
         />
         <Route
