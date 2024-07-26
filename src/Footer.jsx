@@ -42,7 +42,7 @@ export default function Footer() {
             <div
               className={`flex ${
                 isMobile ? "flex-row justify-center" : "flex-col items-end"
-              } text-sm space-${isMobile ? "x" : "y"}-2`}
+              } text-sm space-${isMobile ? "x" : "y"}-4`}
             >
               <div className="flex items-center space-x-2">
                 <a

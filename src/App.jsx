@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Beranda from "./Beranda";
-import Penelitian from "./Penelitian";
+import SyaratPenelitian from "./SyaratPenelitian";
 import FormulirPenelitian from "./FormulirPenelitian";
 import FormulirMagang from "./FormulirMagang";
 
@@ -10,7 +10,10 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Beranda />} />
-        <Route path="/persyaratan-penelitian" element={<Penelitian />} />
+        <Route
+          path="/persyaratan-perizinan-rekomendasi-penelitian"
+          element={<SyaratPenelitian />}
+        />
         <Route
           path="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi"
           element={<FormulirPenelitian />}

@@ -85,7 +85,7 @@ export default function Beranda() {
                 Disertasi, Magang, PKL, PKN, KKN
               </p>
               <a
-                href="/persyaratan-penelitian"
+                href="/persyaratan-perizinan-rekomendasi-penelitian"
                 className="text-[#86B6F6] hover:underline flex items-center"
               >
                 Baca Selengkapnya{" "}

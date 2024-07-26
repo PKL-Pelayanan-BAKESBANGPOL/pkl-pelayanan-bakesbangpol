@@ -2,65 +2,61 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxCrossCircled } from "react-icons/rx";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
 import toast from "react-hot-toast";
 import FAQBackground from "./assets/FAQ Background.png";
 import Footer from "./Footer";
 import ScrollUp from "./ScrollUp";
 
-export default function FormulirMagang() {
+export default function FormulirPenelitian() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
 
   // State untuk field Nama
   const [name, setName] = useState("");
   const [isNameTouched, setIsNameTouched] = useState(false);
-  const [isNameValid, setIsNameValid] = useState(false);
+  const [isNameValid, setIsNameValid] = useState(true);
   const [isNameLengthValid, setIsNameLengthValid] = useState(true);
 
   // State untuk field Nama Peneliti
   const [researcherName, setResearcherName] = useState("");
   const [isResearcherNameTouched, setIsResearcherNameTouched] = useState(false);
-  const [isResearcherNameValid, setIsResearcherNameValid] = useState(false);
+  const [isResearcherNameValid, setIsResearcherNameValid] = useState(true);
   const [isResearcherNameLengthValid, setIsResearcherNameLengthValid] =
     useState(true);
 
   // State untuk field Alamat Rumah
   const [address, setAddress] = useState("");
   const [isAddressTouched, setIsAddressTouched] = useState(false);
-  const [isAddressValid, setIsAddressValid] = useState(false);
+  const [isAddressValid, setIsAddressValid] = useState(true);
   const [isAddressLengthValid, setIsAddressLengthValid] = useState(true);
 
   // State untuk field No. Telepon/Alamat Email
   const [inputValue, setInputValue] = useState("");
   const [isInputTouched, setIsInputTouched] = useState(false);
-  const [isInputValid, setIsInputValid] = useState(false);
+  const [isInputValid, setIsInputValid] = useState(true);
 
   // State untuk field Perguruan Tinggi/Instansi/Lembaga
   const [institution, setInstitution] = useState("");
   const [isInstitutionTouched, setIsInstitutionTouched] = useState(false);
-  const [isInstitutionValid, setIsInstitutionValid] = useState(false);
+  const [isInstitutionValid, setIsInstitutionValid] = useState(true);
   const [isInstitutionLengthValid, setIsInstitutionLengthValid] =
     useState(true);
 
   // State untuk field Pekerjaan
   const [occupation, setOccupation] = useState("");
   const [isOccupationTouched, setIsOccupationTouched] = useState(false);
-  const [isOccupationValid, setIsOccupationValid] = useState(false);
-  const [isOccupationLengthValid, setIsOccupationLengthValid] = useState(true);
+  const [isOccupationValid, setIsOccupationValid] = useState(true);
 
   // State untuk field Judul Penelitian
   const [judulPenelitian, setJudulPenelitian] = useState("");
   const [isJudulTouched, setIsJudulTouched] = useState(false);
-  const [isJudulValid, setIsJudulValid] = useState(false);
-  const [isJudulLengthValid, setIsJudulLengthValid] = useState(true);
+  const [isJudulValid, setIsJudulValid] = useState(true);
 
   // State untuk field Bidang Penelitian/Jurusan
   const [researchField, setResearchField] = useState("");
   const [isResearchFieldTouched, setIsResearchFieldTouched] = useState(false);
-  const [isResearchFieldValid, setIsResearchFieldValid] = useState(false);
-  const [isResearchFieldLengthValid, setIsResearchFieldLengthValid] =
-    useState(true);
+  const [isResearchFieldValid, setIsResearchFieldValid] = useState(true);
 
   // State untuk Tujuan Penelitian
   const [tujuanPenelitian, setTujuanPenelitian] = useState("");
@@ -68,8 +64,7 @@ export default function FormulirMagang() {
   // State untuk field Dosen Pembimbing/Penanggung Jawab
   const [supervisorName, setSupervisorName] = useState("");
   const [isSupervisorTouched, setIsSupervisorTouched] = useState(false);
-  const [isSupervisorValid, setIsSupervisorValid] = useState(false);
-  const [isSupervisorLengthValid, setIsSupervisorLengthValid] = useState(true);
+  const [isSupervisorValid, setIsSupervisorValid] = useState(true);
 
   // State untuk field Anggota Tim Peneliti
   const [teamMembers, setTeamMembers] = useState("");
@@ -82,15 +77,13 @@ export default function FormulirMagang() {
   // State untuk field Waktu Penelitian
   const [researchPeriod, setResearchPeriod] = useState("");
   const [isResearchPeriodTouched, setIsResearchPeriodTouched] = useState(false);
-  const [isResearchPeriodValid, setIsResearchPeriodValid] = useState(false);
+  const [isResearchPeriodValid, setIsResearchPeriodValid] = useState(true);
 
   // State untuk field Lokasi Penelitian
   const [researchLocation, setResearchLocation] = useState("");
   const [isResearchLocationTouched, setIsResearchLocationTouched] =
     useState(false);
-  const [isResearchLocationValid, setIsResearchLocationValid] = useState(false);
-  const [isResearchLocationLengthValid, setIsResearchLocationLengthValid] =
-    useState(true);
+  const [isResearchLocationValid, setIsResearchLocationValid] = useState(true);
 
   // State untuk field Melampirkan
   const [isSuratPengantarChecked, setIsSuratPengantarChecked] = useState(false);
@@ -107,7 +100,7 @@ export default function FormulirMagang() {
     const sanitizedValue = value.replace(/\d/g, ""); // Menghapus angka
     setName(sanitizedValue);
     setIsNameLengthValid(sanitizedValue.length >= 3);
-    setIsNameValid(sanitizedValue.length >= 0);
+    setIsNameValid(sanitizedValue.length > 0);
   };
 
   const handleNameFocus = () => {
@@ -115,7 +108,6 @@ export default function FormulirMagang() {
   };
 
   const handleNameBlur = () => {
-    setIsNameTouched(false);
     if (name.trim() === "") {
       setIsNameValid(false);
       setIsNameLengthValid(true); // Reset validasi panjang
@@ -128,7 +120,7 @@ export default function FormulirMagang() {
     const sanitizedValue = value.replace(/\d/g, ""); // Menghapus angka
     setResearcherName(sanitizedValue);
     setIsResearcherNameLengthValid(sanitizedValue.length >= 3);
-    setIsResearcherNameValid(sanitizedValue.length >= 0);
+    setIsResearcherNameValid(sanitizedValue.length > 0);
   };
 
   const handleResearcherNameFocus = () => {
@@ -136,7 +128,6 @@ export default function FormulirMagang() {
   };
 
   const handleResearcherNameBlur = () => {
-    setIsResearcherNameTouched(false);
     if (researcherName.trim() === "") {
       setIsResearcherNameValid(false);
       setIsResearcherNameLengthValid(true); // Reset validasi panjang
@@ -147,6 +138,7 @@ export default function FormulirMagang() {
   const handleAddressChange = (e) => {
     const value = e.target.value;
     setAddress(value);
+    Pekerjaan;
     setIsAddressLengthValid(value.trim().length >= 10);
     setIsAddressValid(value.trim().length > 0);
   };
@@ -155,11 +147,14 @@ export default function FormulirMagang() {
     setIsAddressTouched(true);
   };
 
+  // Fungsi untuk menangani blur pada input
   const handleAddressBlur = () => {
-    setIsAddressTouched(false);
     if (address.trim() === "") {
       setIsAddressValid(false);
       setIsAddressLengthValid(true); // Reset validasi panjang
+    } else {
+      setIsAddressValid(true);
+      setIsAddressLengthValid(address.trim().length >= 10);
     }
   };
 
@@ -168,24 +163,30 @@ export default function FormulirMagang() {
   };
 
   const handleInputBlur = () => {
-    setIsInputTouched(false);
+    if (inputValue.trim() === "") {
+      setIsInputValid(false);
+    }
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-
-    // Validate input
-    const isValid = value.trim().length > 0;
-    setIsInputValid(isValid);
+    // Validate input only if the field has been touched
+    if (isInputTouched) {
+      setIsInputValid(value.trim().length > 0);
+    }
   };
 
-  // Fungsi untuk menangani perubahan input institution
+  // Fungsi untuk menangani perubahan input Perguruan Tinggi/Instansi/Lembaga
   const handleInstitutionChange = (e) => {
     const value = e.target.value;
     setInstitution(value);
     setIsInstitutionLengthValid(value.trim().length >= 10);
-    setIsInstitutionValid(value.trim().length > 0);
+
+    // Validasi input berdasarkan nilai saat ini dan status diklik
+    if (isInstitutionTouched || value.trim() === "") {
+      setIsInstitutionValid(value.trim().length > 0);
+    }
   };
 
   const handleInstitutionFocus = () => {
@@ -194,18 +195,20 @@ export default function FormulirMagang() {
 
   const handleInstitutionBlur = () => {
     setIsInstitutionTouched(false);
+    // Validasi ulang pada blur jika inputnya kosong
     if (institution.trim() === "") {
       setIsInstitutionValid(false);
-      setIsInstitutionLengthValid(true); // Reset validasi panjang
     }
   };
 
-  // Fungsi untuk menangani perubahan input occupation
   const handleOccupationChange = (e) => {
     const value = e.target.value;
     setOccupation(value);
-    setIsOccupationLengthValid(value.trim().length >= 10);
-    setIsOccupationValid(value.trim().length > 0);
+
+    // Validate input based on current value and touched status
+    if (isOccupationTouched || value.trim() === "") {
+      setIsOccupationValid(value.trim().length > 0);
+    }
   };
 
   const handleOccupationFocus = () => {
@@ -213,20 +216,20 @@ export default function FormulirMagang() {
   };
 
   const handleOccupationBlur = () => {
-    setIsOccupationTouched(false);
+    // Revalidate on blur if the input is empty
     if (occupation.trim() === "") {
       setIsOccupationValid(false);
-      setIsOccupationLengthValid(true); // Reset validasi panjang
     }
   };
 
   const handleJudulChange = (e) => {
     const value = e.target.value;
     setJudulPenelitian(value);
-    // Validasi panjang judul
-    setIsJudulLengthValid(value.trim().length >= 10);
-    // Validasi keseluruhan
-    setIsJudulValid(value.trim().length > 0);
+
+    // Validate input based on current value and touched status
+    if (isJudulTouched || value.trim() === "") {
+      setIsJudulValid(value.trim().length > 0);
+    }
   };
 
   const handleJudulFocus = () => {
@@ -234,19 +237,20 @@ export default function FormulirMagang() {
   };
 
   const handleJudulBlur = () => {
-    setIsJudulTouched(false);
+    // Revalidate on blur if the input is empty
     if (judulPenelitian.trim() === "") {
       setIsJudulValid(false);
-      setIsJudulLengthValid(true); // Reset validasi panjang
     }
   };
 
-  // Fungsi untuk menangani perubahan input researchField
   const handleResearchFieldChange = (e) => {
     const value = e.target.value;
     setResearchField(value);
-    setIsResearchFieldLengthValid(value.trim().length >= 10);
-    setIsResearchFieldValid(value.trim().length > 0);
+
+    // Validasi "tidak boleh kosong" hanya jika field sudah pernah disentuh atau input kosong
+    if (isResearchFieldTouched || value.trim() === "") {
+      setIsResearchFieldValid(value.trim().length > 0);
+    }
   };
 
   const handleResearchFieldFocus = () => {
@@ -254,10 +258,9 @@ export default function FormulirMagang() {
   };
 
   const handleResearchFieldBlur = () => {
-    setIsResearchFieldTouched(false);
+    // Validasi ulang saat blur jika input kosong
     if (researchField.trim() === "") {
       setIsResearchFieldValid(false);
-      setIsResearchFieldLengthValid(true); // Reset validasi panjang
     }
   };
 
@@ -270,8 +273,11 @@ export default function FormulirMagang() {
   const handleSupervisorChange = (e) => {
     const value = e.target.value;
     setSupervisorName(value);
-    setIsSupervisorLengthValid(value.trim().length >= 3);
-    setIsSupervisorValid(value.trim().length > 0);
+
+    // Validasi "tidak boleh kosong" hanya jika field sudah pernah disentuh atau input kosong
+    if (isSupervisorTouched || value.trim() === "") {
+      setIsSupervisorValid(value.trim().length > 0);
+    }
   };
 
   const handleSupervisorFocus = () => {
@@ -279,10 +285,9 @@ export default function FormulirMagang() {
   };
 
   const handleSupervisorBlur = () => {
-    setIsSupervisorTouched(false);
+    // Validasi ulang saat blur jika input kosong
     if (supervisorName.trim() === "") {
       setIsSupervisorValid(false);
-      setIsSupervisorLengthValid(true); // Reset validasi panjang
     }
   };
 
@@ -311,12 +316,15 @@ export default function FormulirMagang() {
     setStatusPenelitian(e.target.value);
   };
 
-  // Fungsi untuk menangani perubahan input researchPeriod
+  // Fungsi untuk menangani perubahan input Waktu Penelitian
   const handleResearchPeriodChange = (e) => {
     const value = e.target.value;
     setResearchPeriod(value);
-    // Validasi keseluruhan (misalnya, cek apakah field tidak kosong)
-    setIsResearchPeriodValid(value.trim().length > 0);
+
+    // Validasi "tidak boleh kosong" hanya jika field sudah pernah disentuh atau input kosong
+    if (isResearchPeriodTouched || value.trim() === "") {
+      setIsResearchPeriodValid(value.trim().length > 0);
+    }
   };
 
   const handleResearchPeriodFocus = () => {
@@ -324,20 +332,21 @@ export default function FormulirMagang() {
   };
 
   const handleResearchPeriodBlur = () => {
-    setIsResearchPeriodTouched(false);
+    // Validasi ulang saat blur jika input kosong
     if (researchPeriod.trim() === "") {
       setIsResearchPeriodValid(false);
     }
   };
 
-  // Fungsi untuk menangani perubahan input researchLocation
+  // Fungsi untuk menangani perubahan input Lokasi Penelitian
   const handleResearchLocationChange = (e) => {
     const value = e.target.value;
     setResearchLocation(value);
-    // Validasi panjang lokasi penelitian
-    setIsResearchLocationLengthValid(value.length >= 15);
-    // Validasi keseluruhan (misalnya, cek apakah field tidak kosong dan panjang valid)
-    setIsResearchLocationValid(value.trim().length > 0);
+
+    // Validasi "tidak boleh kosong" hanya jika field sudah pernah disentuh atau input kosong
+    if (isResearchLocationTouched || value.trim() === "") {
+      setIsResearchLocationValid(value.trim().length > 0);
+    }
   };
 
   const handleResearchLocationFocus = () => {
@@ -345,13 +354,9 @@ export default function FormulirMagang() {
   };
 
   const handleResearchLocationBlur = () => {
-    setIsResearchLocationTouched(false);
+    // Validasi ulang saat blur jika input kosong
     if (researchLocation.trim() === "") {
       setIsResearchLocationValid(false);
-      setIsResearchLocationLengthValid(true); // Reset validasi panjang
-    } else {
-      // Validasi jika field tidak kosong
-      setIsResearchLocationValid(researchLocation.length >= 15);
     }
   };
 
@@ -726,21 +731,30 @@ export default function FormulirMagang() {
       </div>
 
       {/* Back Button */}
-      {!isMobile && (
-        <div className="lg:w-1/12 ml-5 mb-10">
-          <Link to="/persyaratan-penelitian">
-            <div className="flex font-medium items-center text-[#003285] hover:text-[#40A2E3] cursor-pointer">
-              <IoIosArrowBack className="text-2xl" />
-              <h6 className="text-base">Kembali</h6>
-            </div>
-          </Link>
-        </div>
-      )}
+      <div className={`ml-5 pt-1 ${isMobile ? "mb-5" : "mb-10 lg:w-1/12"}`}>
+        <Link to="/persyaratan-perizinan-rekomendasi-penelitian">
+          <div className="flex font-medium items-center text-[#003285] hover:text-[#40A2E3] cursor-pointer">
+            {isMobile ? (
+              <IoMdArrowRoundBack className="text-2xl" />
+            ) : (
+              <>
+                <IoIosArrowBack className="text-2xl" />
+                <h6 className="text-base ml-2">Kembali</h6>
+              </>
+            )}
+          </div>
+        </Link>
+      </div>
+
       {/* Mobile padding top */}
-      {isMobile && <div className="pt-5"></div>}
+      {isMobile && <div className="pt-1"></div>}
 
       {/* Form Section */}
-      <div className="max-w-4xl mx-auto bg-white p-8 mb-10 rounded-lg shadow-lg">
+      <div
+        className={`max-w-4xl mx-auto bg-white ${
+          isMobile ? "p-6 mb-10" : "p-8 mb-20"
+        } rounded-lg shadow-lg`}
+      >
         <h3 className="text-xl font-bold mb-10">
           Formulir Permohonan Rekomendasi Magang/PKL/PKN/KKN Badan Kesatuan
           Bangsa dan Politik Provinsi Jawa timur
@@ -755,7 +769,7 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isNameValid && isNameTouched) || !isNameLengthValid
+                  !isNameValid || !isNameLengthValid
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -765,11 +779,11 @@ export default function FormulirMagang() {
                 onBlur={handleNameBlur}
                 onChange={handleNameChange}
               />
-              {(!isNameValid && isNameTouched) || !isNameLengthValid ? (
+              {(!isNameValid || !isNameLengthValid) && (
                 <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              )}
             </div>
-            {isNameTouched && name.trim() === "" && (
+            {!isNameValid && isNameTouched && (
               <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
                 <p>Nama tidak boleh kosong</p>
               </div>
@@ -783,15 +797,14 @@ export default function FormulirMagang() {
 
           <div>
             <label className="block font-medium mb-1">
-              Nama Peneliti (Sesuai dengan Surat Pengantar)
+              Nama Peneliti (Sesuai dengan Surat Pengantar){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isResearcherNameValid && isResearcherNameTouched) ||
-                  !isResearcherNameLengthValid
+                  !isResearcherNameValid || !isResearcherNameLengthValid
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -801,12 +814,11 @@ export default function FormulirMagang() {
                 onBlur={handleResearcherNameBlur}
                 onChange={handleResearcherNameChange}
               />
-              {(!isResearcherNameValid && isResearcherNameTouched) ||
-              !isResearcherNameLengthValid ? (
+              {(!isResearcherNameValid || !isResearcherNameLengthValid) && (
                 <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              )}
             </div>
-            {isResearcherNameTouched && researcherName.trim() === "" && (
+            {!isResearcherNameValid && isResearcherNameTouched && (
               <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
                 <p>Nama Peneliti tidak boleh kosong</p>
               </div>
@@ -823,13 +835,14 @@ export default function FormulirMagang() {
           <div>
             <label className="block font-medium mb-1">
               Alamat Rumah (Sesuai dengan KTP, sertakan RT, RW, Kelurahan,
-              Kecamatan, dan Kota) <span className="text-[#FF0000]">*</span>
+              Kecamatan, dan Kota)
+              <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isAddressValid && isAddressTouched) || !isAddressLengthValid
+                  (!isAddressValid || !isAddressLengthValid) && isAddressTouched
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -839,12 +852,12 @@ export default function FormulirMagang() {
                 onBlur={handleAddressBlur}
                 onChange={handleAddressChange}
               />
-              {(!isAddressValid && isAddressTouched) ||
-              !isAddressLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {(!isAddressValid || !isAddressLengthValid) &&
+                isAddressTouched && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isAddressTouched && address.trim() === "" && (
+            {!isAddressValid && isAddressTouched && (
               <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
                 <p>Alamat tidak boleh kosong</p>
               </div>
@@ -853,7 +866,7 @@ export default function FormulirMagang() {
               address.trim() !== "" &&
               !isAddressLengthValid && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>Alamat harus berisi minimal 10 karakter</p>
+                  <p>Alamat berisi minimal 10 karakter</p>
                 </div>
               )}
           </div>
@@ -896,8 +909,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isInstitutionValid && isInstitutionTouched) ||
-                  !isInstitutionLengthValid
+                  (!isInstitutionValid || !isInstitutionLengthValid) &&
+                  (isInstitutionTouched || institution.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -907,16 +920,16 @@ export default function FormulirMagang() {
                 onBlur={handleInstitutionBlur}
                 onChange={handleInstitutionChange}
               />
-              {(!isInstitutionValid && isInstitutionTouched) ||
-              !isInstitutionLengthValid ? (
+              {(!isInstitutionValid || !isInstitutionLengthValid) && (
                 <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              )}
             </div>
-            {isInstitutionTouched && institution.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Perguruan Tinggi/Instansi/Lembaga tidak boleh kosong</p>
-              </div>
-            )}
+            {!isInstitutionValid &&
+              (isInstitutionTouched || institution.trim() === "") && (
+                <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
+                  <p>Perguruan Tinggi/Instansi/Lembaga tidak boleh kosong</p>
+                </div>
+              )}
             {isInstitutionTouched &&
               institution.trim() !== "" &&
               !isInstitutionLengthValid && (
@@ -938,8 +951,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isOccupationValid && isOccupationTouched) ||
-                  !isOccupationLengthValid
+                  !isOccupationValid &&
+                  (isOccupationTouched || occupation.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -949,21 +962,15 @@ export default function FormulirMagang() {
                 onBlur={handleOccupationBlur}
                 onChange={handleOccupationChange}
               />
-              {(!isOccupationValid && isOccupationTouched) ||
-              !isOccupationLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {!isOccupationValid &&
+                (isOccupationTouched || occupation.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isOccupationTouched && occupation.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Pekerjaan tidak boleh kosong</p>
-              </div>
-            )}
-            {isOccupationTouched &&
-              occupation.trim() !== "" &&
-              !isOccupationLengthValid && (
+            {!isOccupationValid &&
+              (isOccupationTouched || occupation.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>Pekerjaan harus berisi minimal 10 huruf</p>
+                  <p>Pekerjaan tidak boleh kosong</p>
                 </div>
               )}
           </div>
@@ -976,7 +983,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isJudulValid && isJudulTouched) || !isJudulLengthValid
+                  !isJudulValid &&
+                  (isJudulTouched || judulPenelitian.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -986,59 +994,48 @@ export default function FormulirMagang() {
                 onBlur={handleJudulBlur}
                 onChange={handleJudulChange}
               />
-              {(!isJudulValid && isJudulTouched) || !isJudulLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {!isJudulValid &&
+                (isJudulTouched || judulPenelitian.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isJudulTouched && judulPenelitian.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Judul Penelitian tidak boleh kosong</p>
-              </div>
-            )}
-            {isJudulTouched &&
-              judulPenelitian.trim() !== "" &&
-              !isJudulLengthValid && (
+            {!isJudulValid &&
+              (isJudulTouched || judulPenelitian.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>Judul Penelitian harus berisi minimal 10 huruf</p>
+                  <p>Judul Penelitian tidak boleh kosong</p>
                 </div>
               )}
           </div>
 
           <div>
             <label className="block font-medium mb-1">
-              Bidang Penelitian/Jurusan{" "}
+              Bidang Penelitian (Jurusan){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isResearchFieldValid && isResearchFieldTouched) ||
-                  !isResearchFieldLengthValid
+                  !isResearchFieldValid &&
+                  (isResearchFieldTouched || researchField.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
-                placeholder="Bidang Penelitian/Jurusan"
+                placeholder="Bidang Penelitian (Jurusan)"
                 value={researchField}
                 onFocus={handleResearchFieldFocus}
                 onBlur={handleResearchFieldBlur}
                 onChange={handleResearchFieldChange}
               />
-              {(!isResearchFieldValid && isResearchFieldTouched) ||
-              !isResearchFieldLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {!isResearchFieldValid &&
+                (isResearchFieldTouched || researchField.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isResearchFieldTouched && researchField.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Bidang Penelitian/Jurusan tidak boleh kosong</p>
-              </div>
-            )}
-            {isResearchFieldTouched &&
-              researchField.trim() !== "" &&
-              !isResearchFieldLengthValid && (
+            {!isResearchFieldValid &&
+              (isResearchFieldTouched || researchField.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>Bidang Penelitian/Jurusan harus berisi minimal 10 huruf</p>
+                  <p>Bidang Penelitian (Jurusan) tidak boleh kosong</p>
                 </div>
               )}
           </div>
@@ -1090,8 +1087,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isSupervisorValid && isSupervisorTouched) ||
-                  !isSupervisorLengthValid
+                  !isSupervisorValid &&
+                  (isSupervisorTouched || supervisorName.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -1101,24 +1098,15 @@ export default function FormulirMagang() {
                 onBlur={handleSupervisorBlur}
                 onChange={handleSupervisorChange}
               />
-              {(!isSupervisorValid && isSupervisorTouched) ||
-              !isSupervisorLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {!isSupervisorValid &&
+                (isSupervisorTouched || supervisorName.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isSupervisorTouched && supervisorName.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Dosen Pembimbing/Penanggung Jawab tidak boleh kosong</p>
-              </div>
-            )}
-            {isSupervisorTouched &&
-              supervisorName.trim() !== "" &&
-              !isSupervisorLengthValid && (
+            {!isSupervisorValid &&
+              (isSupervisorTouched || supervisorName.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>
-                    Dosen Pembimbing/Penanggung Jawab harus berisi minimal 3
-                    huruf
-                  </p>
+                  <p>Dosen Pembimbing/Penanggung Jawab tidak boleh kosong</p>
                 </div>
               )}
           </div>
@@ -1193,7 +1181,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  !isResearchPeriodValid && isResearchPeriodTouched
+                  !isResearchPeriodValid &&
+                  (isResearchPeriodTouched || researchPeriod.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -1203,15 +1192,17 @@ export default function FormulirMagang() {
                 onBlur={handleResearchPeriodBlur}
                 onChange={handleResearchPeriodChange}
               />
-              {!isResearchPeriodValid && isResearchPeriodTouched && (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              )}
+              {!isResearchPeriodValid &&
+                (isResearchPeriodTouched || researchPeriod.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isResearchPeriodTouched && researchPeriod.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Waktu Penelitian tidak boleh kosong</p>
-              </div>
-            )}
+            {!isResearchPeriodValid &&
+              (isResearchPeriodTouched || researchPeriod.trim() === "") && (
+                <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
+                  <p>Waktu Penelitian tidak boleh kosong</p>
+                </div>
+              )}
           </div>
 
           <div>
@@ -1223,8 +1214,8 @@ export default function FormulirMagang() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  (!isResearchLocationValid && isResearchLocationTouched) ||
-                  !isResearchLocationLengthValid
+                  !isResearchLocationValid &&
+                  (isResearchLocationTouched || researchLocation.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
@@ -1234,21 +1225,16 @@ export default function FormulirMagang() {
                 onBlur={handleResearchLocationBlur}
                 onChange={handleResearchLocationChange}
               />
-              {(!isResearchLocationValid && isResearchLocationTouched) ||
-              !isResearchLocationLengthValid ? (
-                <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
-              ) : null}
+              {!isResearchLocationValid &&
+                (isResearchLocationTouched ||
+                  researchLocation.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
             </div>
-            {isResearchLocationTouched && researchLocation.trim() === "" && (
-              <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                <p>Lokasi Penelitian tidak boleh kosong</p>
-              </div>
-            )}
-            {isResearchLocationTouched &&
-              researchLocation.trim() !== "" &&
-              !isResearchLocationLengthValid && (
+            {!isResearchLocationValid &&
+              (isResearchLocationTouched || researchLocation.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
-                  <p>Lokasi Penelitian harus berisi minimal 15 karakter</p>
+                  <p>Lokasi Penelitian tidak boleh kosong</p>
                 </div>
               )}
           </div>
@@ -1325,7 +1311,7 @@ export default function FormulirMagang() {
           <div className="text-end">
             <button
               type="submit"
-              className="mt-4 bg-[#2A629A] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#003285] transition duration-300"
+              className="mt-4 bg-[#2A629A] text-white font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
             >
               Kirim Data
             </button>
