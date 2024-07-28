@@ -21,7 +21,8 @@ export default function SyaratPenelitian() {
         />
         <div className="relative flex flex-col items-center justify-center text-center z-10 p-8 m-5 bg-white bg-opacity-75 rounded-lg shadow-lg max-w-4xl">
           <h1 className="text-3xl font-bold mb-10">
-            PERSYARATAN PERIZINAN REKOMENDASI PENELITIAN DI PROVINSI JAWA TIMUR
+            PERSYARATAN PERIZINAN REKOMENDASI <br />
+            PENELITIAN DI PROVINSI JAWA TIMUR
           </h1>
           <div className="text-left text-lg space-y-4">
             <div>

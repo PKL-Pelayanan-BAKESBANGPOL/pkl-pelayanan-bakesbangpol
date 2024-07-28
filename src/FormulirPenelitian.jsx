@@ -71,13 +71,13 @@ export default function FormulirPenelitian() {
   const [isTeamMembersTouched, setIsTeamMembersTouched] = useState(false);
   const [isTeamMembersValid, setIsTeamMembersValid] = useState(true);
 
-  // State untuk Status Penelitian
-  const [statusPenelitian, setStatusPenelitian] = useState("");
-
   // State untuk field Waktu Penelitian
   const [researchPeriod, setResearchPeriod] = useState("");
   const [isResearchPeriodTouched, setIsResearchPeriodTouched] = useState(false);
   const [isResearchPeriodValid, setIsResearchPeriodValid] = useState(true);
+
+  // State untuk Status Penelitian
+  const [statusPenelitian, setStatusPenelitian] = useState("");
 
   // State untuk field Lokasi Penelitian
   const [researchLocation, setResearchLocation] = useState("");
@@ -311,11 +311,6 @@ export default function FormulirPenelitian() {
     setIsTeamMembersTouched(false);
   };
 
-  // Fungsi untuk menangani perubahan pilihan Status Penelitian
-  const handleStatusPenelitianChange = (e) => {
-    setStatusPenelitian(e.target.value);
-  };
-
   // Fungsi untuk menangani perubahan input Waktu Penelitian
   const handleResearchPeriodChange = (e) => {
     const value = e.target.value;
@@ -336,6 +331,11 @@ export default function FormulirPenelitian() {
     if (researchPeriod.trim() === "") {
       setIsResearchPeriodValid(false);
     }
+  };
+
+  // Fungsi untuk menangani perubahan pilihan Status Penelitian
+  const handleStatusPenelitianChange = (e) => {
+    setStatusPenelitian(e.target.value);
   };
 
   // Fungsi untuk menangani perubahan input Lokasi Penelitian
@@ -611,8 +611,8 @@ export default function FormulirPenelitian() {
     }
 
     // Validasi untuk setiap field
-    if (!statusPenelitian) {
-      toast("Mohon pilih Status Penelitian!", {
+    if (!researchPeriod) {
+      toast("Mohon isi kolom Waktu Penelitian!", {
         style: {
           background: "#FF0000",
           color: "#FFFFFF",
@@ -630,8 +630,8 @@ export default function FormulirPenelitian() {
     }
 
     // Validasi untuk setiap field
-    if (!researchPeriod) {
-      toast("Mohon isi kolom Waktu Penelitian!", {
+    if (!statusPenelitian) {
+      toast("Mohon pilih Status Penelitian!", {
         style: {
           background: "#FF0000",
           color: "#FFFFFF",
@@ -1146,34 +1146,6 @@ export default function FormulirPenelitian() {
 
           <div>
             <label className="block font-medium mb-1">
-              Status Penelitian <span className="text-[#FF0000]">*</span>
-            </label>
-            <div className="flex space-x-4 mt-2">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio text-[#2A629A] border-gray-300"
-                  name="statusPenelitian"
-                  value="Baru"
-                  onChange={handleStatusPenelitianChange}
-                />
-                <span className="ml-2 text-sm text-gray-900">Baru</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio text-[#2A629A] border-gray-300"
-                  name="statusPenelitian"
-                  value="Perpanjangan"
-                  onChange={handleStatusPenelitianChange}
-                />
-                <span className="ml-2 text-sm text-gray-900">Perpanjangan</span>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <label className="block font-medium mb-1">
               Waktu Penelitian (Sertakan Tanggal, Bulan, dan Tahun){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
@@ -1203,6 +1175,34 @@ export default function FormulirPenelitian() {
                   <p>Waktu Penelitian tidak boleh kosong</p>
                 </div>
               )}
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">
+              Status Penelitian <span className="text-[#FF0000]">*</span>
+            </label>
+            <div className="flex space-x-4 mt-2">
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  className="form-radio text-[#2A629A] border-gray-300"
+                  name="statusPenelitian"
+                  value="Baru"
+                  onChange={handleStatusPenelitianChange}
+                />
+                <span className="ml-2 text-sm text-gray-900">Baru</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  className="form-radio text-[#2A629A] border-gray-300"
+                  name="statusPenelitian"
+                  value="Perpanjangan"
+                  onChange={handleStatusPenelitianChange}
+                />
+                <span className="ml-2 text-sm text-gray-900">Perpanjangan</span>
+              </label>
+            </div>
           </div>
 
           <div>
