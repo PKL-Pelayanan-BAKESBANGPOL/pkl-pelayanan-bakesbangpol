@@ -1,17 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Beranda from "./Beranda";
-import Penelitian from "./Penelitian";
+import SyaratPenelitian from "./SyaratPenelitian";
 import FormulirPenelitian from "./FormulirPenelitian";
 import FormulirMagang from "./FormulirMagang";
 import ProsesAjuan from "./ProsesAjuan";
+import TidakDitemukan from "./TidakDitemukan";
 
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Beranda />} />
-        <Route path="/persyaratan-penelitian" element={<Penelitian />} />
+        <Route
+          path="/persyaratan-perizinan-rekomendasi-penelitian"
+          element={<SyaratPenelitian />}
+        />
         <Route
           path="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi"
           element={<FormulirPenelitian />}
@@ -21,6 +25,7 @@ export default function App() {
           element={<FormulirMagang />}
         />
         <Route path="/proses-ajuan" element={<ProsesAjuan />} />
+        <Route path="*" element={<TidakDitemukan />} />
       </Routes>
     </Router>
   );

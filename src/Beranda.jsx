@@ -39,9 +39,15 @@ export default function Beranda() {
               Akses mudah dan cepat ke berbagai layanan yang disediakan oleh
               Badan Kesatuan Bangsa dan Politik Provinsi Jawa Timur
             </p>
+            {/* <button
+              onClick={scrollToGridSection}
+              className="bg-[#2A629A] text-white font-medium px-4 py-2 rounded-full hover:bg-[#003285] transition duration-300 inline-block"
+            >
+              Kunjungi Laman
+            </button> */}
             <button
               onClick={scrollToGridSection}
-              className="bg-[#2A629A] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#003285] transition duration-300 inline-block"
+              className="border-2 border-[#003285] bg-transparent text-[#003285] font-medium px-4 py-2 rounded-full hover:bg-[#003285] hover:text-white transition duration-300 inline-block"
             >
               Kunjungi Laman
             </button>
@@ -61,7 +67,7 @@ export default function Beranda() {
       <div id="grid-section" className="bg-[#EEF5FF] py-16">
         <div className="max-w-6xl mx-auto px-5 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
               <FaArrowsDownToPeople className="w-20 h-20 mb-4 text-[#2A629A]" />
               <h3 className="text-2xl font-semibold mb-2">Ormas</h3>
               <p className="text-gray-600 mb-4">
@@ -77,7 +83,7 @@ export default function Beranda() {
                 </span>
               </a>
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
               <ImSearch className="w-20 h-20 mb-4 text-[#2A629A]" />
               <h3 className="text-2xl font-semibold mb-2">Penelitian</h3>
               <p className="text-gray-600 mb-4">
@@ -85,7 +91,7 @@ export default function Beranda() {
                 Disertasi, Magang, PKL, PKN, KKN
               </p>
               <a
-                href="/persyaratan-penelitian"
+                href="/persyaratan-perizinan-rekomendasi-penelitian"
                 className="text-[#86B6F6] hover:underline flex items-center"
               >
                 Baca Selengkapnya{" "}
@@ -94,7 +100,7 @@ export default function Beranda() {
                 </span>
               </a>
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
               <GiHumanPyramid className="w-20 h-20 mb-4 text-[#2A629A]" />
               <h3 className="text-2xl font-semibold mb-2">Parpol</h3>
               <p className="text-gray-600 mb-4">
