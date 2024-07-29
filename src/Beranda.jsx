@@ -138,33 +138,33 @@ export default function Beranda() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FAQ
               icon={<FaEnvelope className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Bagaimana cara mengubah email akun saya?"
-              answer="Anda bisa masuk ke akun Anda dan mengubahnya dari Profil > Edit Profil. Kemudian pergi ke tab umum untuk mengubah email Anda."
+              question="Dokumen apa saja yang diperlukan untuk mengajukan permohonan layanan?"
+              answer="Dokumen yang diperlukan dapat bervariasi tergantung jenis layanan yang diajukan. Umumnya, Anda perlu menyiapkan KTP, surat permohonan resmi, dan dokumen pendukung lainnya sesuai dengan jenis layanan yang Anda butuhkan. Informasi lebih lanjut bisa ditemukan di website resmi Bakesbangpol Provinsi Jawa Timur."
             />
             <FAQ
               icon={<FaCreditCard className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Apa yang harus saya lakukan jika pembayaran saya gagal?"
-              answer="Jika pembayaran Anda gagal, Anda dapat menggunakan opsi pembayaran (COD) jika tersedia pada pesanan tersebut. Jika pembayaran Anda terdebit dari akun Anda."
+              question="Berapa lama waktu yang dibutuhkan untuk memproses permohonan layanan?"
+              answer="Waktu pemrosesan permohonan layanan dapat bervariasi tergantung pada jenis layanan dan kelengkapan dokumen yang diajukan. Biasanya, Anda akan menerima pemberitahuan mengenai status permohonan melalui email atau SMS dalam waktu beberapa hari kerja."
             />
             <FAQ
               icon={<FaTimesCircle className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Apa kebijakan pembatalan Anda?"
-              answer="Anda sekarang dapat membatalkan pesanan ketika statusnya dalam keadaan dikemas/dikirim. Jumlah yang dibayarkan akan dikreditkan ke mode pembayaran yang sama."
+              question="Apa yang harus saya lakukan jika ada masalah dengan permohonan saya?"
+              answer="Jika Anda mengalami masalah dengan permohonan, Anda dapat menghubungi layanan pelanggan Bakesbangpol Provinsi Jawa Timur melalui kontak yang tersedia di website resmi atau datang langsung ke kantor Bakesbangpol untuk mendapatkan bantuan lebih lanjut."
             />
             <FAQ
               icon={<FaEnvelope className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Bagaimana cara mengubah email akun saya?"
-              answer="Anda bisa masuk ke akun Anda dan mengubahnya dari Profil > Edit Profil. Kemudian pergi ke tab umum untuk mengubah email Anda."
+              question="Di mana saya bisa menemukan informasi lebih lanjut mengenai program dan kegiatan Bakesbangpol Provinsi Jawa Timur?"
+              answer="Informasi mengenai program dan kegiatan Bakesbangpol Provinsi Jawa Timur dapat ditemukan di website resmi Bakesbangpol, media sosial, dan publikasi resmi lainnya. Anda juga dapat mengunjungi kantor Bakesbangpol untuk mendapatkan informasi lebih lengkap."
             />
             <FAQ
               icon={<FaCreditCard className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Apa yang harus saya lakukan jika pembayaran saya gagal?"
-              answer="Jika pembayaran Anda gagal, Anda dapat menggunakan opsi pembayaran (COD) jika tersedia pada pesanan tersebut. Jika pembayaran Anda terdebit dari akun Anda."
+              question="Apa saja layanan yang disediakan oleh Bakesbangpol Provinsi Jawa Timur?"
+              answer="Bakesbangpol Provinsi Jawa Timur menyediakan berbagai layanan terkait kesatuan bangsa, politik, dan ketahanan masyarakat, seperti penerbitan izin organisasi masyarakat, koordinasi pemilu, sosialisasi kebijakan pemerintah, dan layanan pengaduan masyarakat."
             />
             <FAQ
               icon={<FaTimesCircle className="w-10 h-10 mb-4 text-[#2A629A]" />}
-              question="Apa kebijakan pembatalan Anda?"
-              answer="Anda sekarang dapat membatalkan pesanan ketika statusnya dalam keadaan dikemas/dikirim. Jumlah yang dibayarkan akan dikreditkan ke mode pembayaran yang sama."
+              question="Bagaimana cara menghubungi Bakesbangpol Provinsi Jawa Timur?"
+              answer="Anda dapat menghubungi Bakesbangpol Provinsi Jawa Timur melalui telepon, email, atau datang langsung ke kantor Bakesbangpol. Informasi kontak lengkap dapat ditemukan di website resmi Bakesbangpol Provinsi Jawa Timur."
             />
           </div>
         </div>

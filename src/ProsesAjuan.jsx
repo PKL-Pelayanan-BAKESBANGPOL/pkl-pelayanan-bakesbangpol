@@ -1,0 +1,60 @@
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Footer from "./Footer";
+
+export default function ProsesAjuan() {
+  const navigate = useNavigate();
+
+  // Menggulir ke atas saat komponen dimuat
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#EEF5FF] flex flex-col">
+      <div className="flex-grow flex items-center justify-center p-4 sm:p-8">
+        <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6 sm:p-8">
+          <iframe
+            src="https://lottie.host/embed/f49a40f6-c418-4789-a416-73dfaa362a16/17gVh3wBoN.json"
+            title="Success Animation"
+            className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-4 sm:mb-6"
+          ></iframe>
+          <div className="text-center space-y-3 sm:space-y-4">
+            <h1 className="text-blue-600 text-2xl sm:text-3xl font-bold">
+              Dokumen Ajuan Anda Sedang Diproses
+            </h1>
+            <p className="text-gray-700 text-sm sm:text-base">
+              Mohon cek email secara berkala.
+            </p>
+            <p className="text-gray-700 text-sm sm:text-base">
+              Untuk kepentingan perbaikan mutu pelayanan di Bakesbangpol
+              Provinsi Jawa Timur, pemohon diwajibkan mengisi Survei Kepuasan
+              Masyarakat (SKM) di bawah ini.
+            </p>
+          </div>
+          <div className="mt-6 sm:mt-8 flex flex-col items-center space-y-3 sm:space-y-4">
+            <button
+              className="bg-blue-500 text-white rounded-full py-2 px-4 sm:px-6 w-full max-w-xs text-sm sm:text-base hover:bg-blue-600 transition duration-300"
+              onClick={() =>
+                window.open(
+                  "https://sukma.jatimprov.go.id/fe/survey?idUser=280&idEvent=2695",
+                  "_blank"
+                )
+              }
+            >
+              Survei Kepuasan Pelayanan
+            </button>
+            <button
+              className="bg-gray-500 text-white rounded-full py-2 px-4 sm:px-6 w-full max-w-xs text-sm sm:text-base hover:bg-gray-600 transition duration-300"
+              onClick={() => navigate("/")}
+            >
+              Kembali Beranda
+            </button>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}

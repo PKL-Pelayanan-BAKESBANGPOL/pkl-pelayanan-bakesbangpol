@@ -4,6 +4,7 @@ import Beranda from "./Beranda";
 import Penelitian from "./Penelitian";
 import FormulirPenelitian from "./FormulirPenelitian";
 import FormulirMagang from "./FormulirMagang";
+import ProsesAjuan from "./ProsesAjuan";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           path="/formulir-magang/pkl/pkn/kkn"
           element={<FormulirMagang />}
         />
+        <Route path="/proses-ajuan" element={<ProsesAjuan />} />
       </Routes>
     </Router>
   );
