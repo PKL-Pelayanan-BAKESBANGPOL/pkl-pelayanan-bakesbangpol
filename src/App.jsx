@@ -4,6 +4,7 @@ import Beranda from "./Beranda";
 import SyaratPenelitian from "./SyaratPenelitian";
 import FormulirPenelitian from "./FormulirPenelitian";
 import FormulirMagang from "./FormulirMagang";
+import ProsesAjuan from "./ProsesAjuan";
 import TidakDitemukan from "./TidakDitemukan";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           path="/formulir-magang/pkl/pkn/kkn"
           element={<FormulirMagang />}
         />
+        <Route path="/proses-ajuan" element={<ProsesAjuan />} />
         <Route path="*" element={<TidakDitemukan />} />
       </Routes>
     </Router>
