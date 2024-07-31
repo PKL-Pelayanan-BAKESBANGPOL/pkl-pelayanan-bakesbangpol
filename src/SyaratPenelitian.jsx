@@ -5,7 +5,11 @@ import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
 import Header from "./assets/Header.png";
 import Footer from "./Footer";
 import ScrollUp from "./ScrollUp";
-import Image1 from "./assets/image1.jpg";
+import Image1 from "./assets/Image 1.png";
+import Image2 from "./assets/Image 2.png";
+import Image3 from "./assets/Image 3.png";
+import Image4 from "./assets/Image 4.png";
+import Image5 from "./assets/Image 5.png";
 
 export default function SyaratPenelitian() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -68,7 +72,6 @@ export default function SyaratPenelitian() {
         </div>
       </div>
 
-      {/* Requirements Section */}
       <div className="bg-[#EEF5FF]">
         {/* Back Button */}
         <div className={`ml-5 pt-5 ${isMobile ? "mb-1" : "mb-10 lg:w-1/12"}`}>
@@ -79,7 +82,7 @@ export default function SyaratPenelitian() {
               ) : (
                 <>
                   <IoIosArrowBack className="text-2xl" />
-                  <h6 className="text-base ml-2">Kembali</h6>
+                  <h6 className="text-base ml-1">Kembali</h6>
                 </>
               )}
             </div>
@@ -89,6 +92,7 @@ export default function SyaratPenelitian() {
         {/* Mobile padding top */}
         {isMobile && <div className="pt-5"></div>}
 
+        {/* Requirements Section */}
         <div className="text-center">
           <h2 className="text-xl font-bold text-[#003285] px-4">
             Berikut ini persyaratan yang dibutuhkan untuk pembuatan izin
@@ -100,7 +104,7 @@ export default function SyaratPenelitian() {
             <img
               src={Image1}
               alt="Mahasiswa Provinsi"
-              className="w-full h-56 md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
+              className="w-full h-full md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
             />
             <div>
               <h3 className="text-xl md:text-2xl font-semibold mb-4">
@@ -118,9 +122,9 @@ export default function SyaratPenelitian() {
           </div>
           <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg shadow-[#86B6F6] flex flex-col md:flex-row items-start">
             <img
-              src={Image1}
+              src={Image2}
               alt="Mahasiswa Luar Provinsi"
-              className="w-full h-56 md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
+              className="w-full h-full md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
             />
             <div>
               <h3 className="text-xl md:text-2xl font-semibold mb-4">
@@ -139,9 +143,9 @@ export default function SyaratPenelitian() {
           </div>
           <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg shadow-[#86B6F6] flex flex-col md:flex-row items-start">
             <img
-              src={Image1}
+              src={Image3}
               alt="Mahasiswa Luar Negeri"
-              className="w-full h-56 md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
+              className="w-full h-full md:w-60 md:h-60 object-cover mb-4 md:mb-0 md:mr-8"
             />
             <div>
               <h3 className="text-xl md:text-2xl font-semibold mb-4">
@@ -163,9 +167,9 @@ export default function SyaratPenelitian() {
           </div>
           <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg shadow-[#86B6F6] flex flex-col md:flex-row items-start">
             <img
-              src={Image1}
+              src={Image4}
               alt="Lembaga/PT"
-              className="w-full h-56 md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
+              className="w-full h-full md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
             />
             <div>
               <h3 className="text-xl md:text-2xl font-semibold mb-4">
@@ -196,9 +200,9 @@ export default function SyaratPenelitian() {
           <div className="grid grid-cols-1 gap-8 p-5 md:px-10 m-5 max-w-6xl mx-auto">
             <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg shadow-[#86B6F6] flex flex-col md:flex-row items-start">
               <img
-                src={Image1}
+                src={Image5}
                 alt="Proposal Requirements"
-                className="w-full h-56 md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
+                className="w-full h-full md:w-56 md:h-56 object-cover mb-4 md:mb-0 md:mr-8"
               />
               <div>
                 <h3 className="text-xl md:text-2xl font-semibold mb-4">
@@ -328,8 +332,9 @@ export default function SyaratPenelitian() {
         </div>
 
         {/* ScrollUp Button */}
-        {/* {isMobile ? "" : <ScrollUp />} */}
         <ScrollUp />
+
+        {/* Footer Section */}
         <Footer />
       </div>
     </>

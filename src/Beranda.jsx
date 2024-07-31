@@ -39,15 +39,9 @@ export default function Beranda() {
               Akses mudah dan cepat ke berbagai layanan yang disediakan oleh
               Badan Kesatuan Bangsa dan Politik Provinsi Jawa Timur
             </p>
-            {/* <button
-              onClick={scrollToGridSection}
-              className="bg-[#2A629A] text-white font-medium px-4 py-2 rounded-full hover:bg-[#003285] transition duration-300 inline-block"
-            >
-              Kunjungi Laman
-            </button> */}
             <button
               onClick={scrollToGridSection}
-              className="border-2 border-[#003285] bg-transparent text-[#003285] font-medium px-4 py-2 rounded-full hover:bg-[#003285] hover:text-white transition duration-300 inline-block"
+              className="bg-[#2A629A] text-white font-medium px-4 py-2 rounded-full hover:bg-[#003285] transition duration-300 inline-block"
             >
               Kunjungi Laman
             </button>
@@ -178,6 +172,8 @@ export default function Beranda() {
 
       {/* ScrollUp Button */}
       <ScrollUp />
+
+      {/* Footer Section */}
       <Footer />
     </>
   );

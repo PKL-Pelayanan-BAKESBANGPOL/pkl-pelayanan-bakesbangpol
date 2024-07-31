@@ -12,6 +12,11 @@ export default function FormulirPenelitian() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
 
+  // State untuk field Nomor Surat
+  const [letterNumber, setLetterNumber] = useState("");
+  const [isLetterNumberTouched, setIsLetterNumberTouched] = useState(false);
+  const [isLetterNumberValid, setIsLetterNumberValid] = useState(true);
+
   // State untuk field Nama
   const [name, setName] = useState("");
   const [isNameTouched, setIsNameTouched] = useState(false);
@@ -93,6 +98,28 @@ export default function FormulirPenelitian() {
   const [suratPengantarFile, setSuratPengantarFile] = useState(null);
   const [proposalFile, setProposalFile] = useState(null);
   const [ktpFile, setKtpFile] = useState(null);
+
+  // Fungsi untuk menangani perubahan input Nomor Surat
+  const handleLetterNumberChange = (e) => {
+    const value = e.target.value;
+    setLetterNumber(value);
+
+    // Validasi "tidak boleh kosong" hanya jika field sudah pernah disentuh atau input kosong
+    if (isLetterNumberTouched || value.trim() === "") {
+      setIsLetterNumberValid(value.trim().length > 0);
+    }
+  };
+
+  const handleLetterNumberFocus = () => {
+    setIsLetterNumberTouched(true);
+  };
+
+  const handleLetterNumberBlur = () => {
+    // Validasi ulang saat blur jika input kosong
+    if (letterNumber.trim() === "") {
+      setIsLetterNumberValid(false);
+    }
+  };
 
   // Fungsi untuk menangani perubahan input nama
   const handleNameChange = (e) => {
@@ -402,6 +429,25 @@ export default function FormulirPenelitian() {
     e.preventDefault();
 
     // Validasi untuk setiap field
+    if (!letterNumber) {
+      toast("Mohon isi kolom nomor surat!", {
+        style: {
+          background: "#FF0000",
+          color: "#FFFFFF",
+          borderRadius: "10px",
+          fontSize: "14px",
+          textAlign: "center",
+          // padding: "10px 20px",
+          width: "full",
+          maxWidth: "900px",
+        },
+        position: "top-center",
+        duration: 3000,
+      });
+      return;
+    }
+
+    // Validasi untuk setiap field
     if (!name) {
       toast("Mohon isi kolom nama!", {
         style: {
@@ -703,7 +749,7 @@ export default function FormulirPenelitian() {
     });
 
     setTimeout(() => {
-      navigate("/"); // Navigasi ke halaman utama
+      navigate("/proses-ajuan"); // Navigasi ke halaman proses ajuan
     }, 3000);
 
     // Lakukan submit data ke server atau tindakan lainnya
@@ -739,7 +785,7 @@ export default function FormulirPenelitian() {
             ) : (
               <>
                 <IoIosArrowBack className="text-2xl" />
-                <h6 className="text-base ml-2">Kembali</h6>
+                <h6 className="text-base ml-1">Kembali</h6>
               </>
             )}
           </div>
@@ -760,6 +806,38 @@ export default function FormulirPenelitian() {
           Bangsa dan Politik Provinsi Jawa timur
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block font-medium mb-1">
+              Nomor Surat <span className="text-[#FF0000]">*</span>
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                  !isLetterNumberValid &&
+                  (isLetterNumberTouched || letterNumber.trim() === "")
+                    ? "border-[#FF0000]"
+                    : "border-gray-300 focus:border-[#2A629A]"
+                }`}
+                placeholder="Nomor Surat (Sesuai dengan Surat Pengantar dari Instansi)"
+                value={letterNumber}
+                onFocus={handleLetterNumberFocus}
+                onBlur={handleLetterNumberBlur}
+                onChange={handleLetterNumberChange}
+              />
+              {!isLetterNumberValid &&
+                (isLetterNumberTouched || letterNumber.trim() === "") && (
+                  <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
+                )}
+            </div>
+            {!isLetterNumberValid &&
+              (isLetterNumberTouched || letterNumber.trim() === "") && (
+                <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
+                  <p>Nomor surat tidak boleh kosong</p>
+                </div>
+              )}
+          </div>
+
           <div>
             <label className="block font-medium mb-1">
               Nama (Nama yang Mewakili/Mengajukan){" "}
