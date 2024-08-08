@@ -1,5 +1,12 @@
 import React from "react";
-import { FaEnvelope, FaCreditCard, FaTimesCircle } from "react-icons/fa";
+import {
+  IoDocumentAttachSharp,
+  IoTime,
+  IoWarningOutline,
+  IoCall,
+} from "react-icons/io5";
+import { TbLocationQuestion } from "react-icons/tb";
+import { FaPersonCircleQuestion } from "react-icons/fa6";
 
 export default function FAQ({ icon, question, answer }) {
   return (

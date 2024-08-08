@@ -769,7 +769,7 @@ export default function FormulirPenelitian() {
           backgroundImage: `url(${FAQBackground})`,
         }}
       >
-        <h2 className="text-3xl font-bold">
+        <h2 className="text-2xl md:text-3xl font-bold">
           Ajuan Permohonan Rekomendasi Magang, Praktek Kerja Lapang, <br />
           Praktek Kerja Nyata, atau Kuliah Kerja Nyata
         </h2>
@@ -800,7 +800,7 @@ export default function FormulirPenelitian() {
           isMobile ? "p-6 mb-10" : "p-8 mb-20"
         } rounded-lg shadow-lg`}
       >
-        <h3 className="text-xl font-bold mb-10">
+        <h3 className="text-lg md:text-xl font-bold mb-10">
           Formulir Permohonan Rekomendasi Magang/PKL/PKN/KKN Badan Kesatuan
           Bangsa dan Politik Provinsi Jawa timur
         </h3>
@@ -1387,7 +1387,7 @@ export default function FormulirPenelitian() {
           <div className="text-end">
             <button
               type="submit"
-              className="mt-4 bg-[#2A629A] text-white font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
+              className="mt-4 bg-[#2A629A] text-white text-sm md:text-base font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
             >
               Kirim Data
             </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IoIosArrowUp } from "react-icons/io";
+import { IoArrowUp } from "react-icons/io5";
 
 export default function ScrollUp() {
   const [showButton, setShowButton] = useState(false); // State untuk mengontrol visibilitas tombol
@@ -41,9 +41,9 @@ export default function ScrollUp() {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 bg-[#86B6F6] bg-opacity-75 text-white p-3 rounded-full shadow-lg hover:bg-[#86B6F6] transition duration-300 focus:ring-2 ring-white"
+          className="fixed bottom-5 right-5 bg-[#86B6F6] bg-opacity-75 text-white p-3 rounded-full shadow-lg hover:bg-[#86B6F6] transition duration-300 focus:ring-2 ring-white ring-inset hover:scale-90"
         >
-          <IoIosArrowUp
+          <IoArrowUp
             className={`w-7 h-7 ${animate ? "animate-moveIcon" : ""}`}
           />
         </button>

@@ -11,16 +11,16 @@ export default function TidakDitemukan() {
           title="404 Animation"
         ></iframe>
       </div>
-      <h2 className="text-2xl md:text-4xl font-bold text-gray-700 mb-2 text-center">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-700 mb-2 text-center">
         Halaman Tidak Ditemukan!
       </h2>
-      <p className="text-base md:text-lg font-medium text-gray-600 mb-6 text-center">
+      <p className="text-sm md:text-lg font-medium text-gray-600 mb-6 text-center">
         Maaf, halaman yang Anda cari tidak ada. Silakan kembali ke halaman
         utama.
       </p>
       <Link
         to="/"
-        className="text-base md:text-base bg-[#2A629A] text-white font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
+        className="bg-[#2A629A] text-white text-sm md:text-base font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
       >
         Kembali ke Beranda
       </Link>

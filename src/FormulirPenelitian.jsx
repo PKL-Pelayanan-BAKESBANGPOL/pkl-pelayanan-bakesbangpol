@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxCrossCircled } from "react-icons/rx";
@@ -95,9 +96,9 @@ export default function FormulirPenelitian() {
   const [isProposalChecked, setIsProposalChecked] = useState(false);
   const [isKTPChecked, setIsKTPChecked] = useState(false);
 
-  const [suratPengantarFile, setSuratPengantarFile] = useState(null);
-  const [proposalFile, setProposalFile] = useState(null);
-  const [ktpFile, setKtpFile] = useState(null);
+  const [suratPengantarFile, setSuratPengantarFile] = useState("");
+  const [proposalFile, setProposalFile] = useState("");
+  const [ktpFile, setKtpFile] = useState("");
 
   // Fungsi untuk menangani perubahan input Nomor Surat
   const handleLetterNumberChange = (e) => {
@@ -165,7 +166,6 @@ export default function FormulirPenelitian() {
   const handleAddressChange = (e) => {
     const value = e.target.value;
     setAddress(value);
-    Pekerjaan;
     setIsAddressLengthValid(value.trim().length >= 10);
     setIsAddressValid(value.trim().length > 0);
   };
@@ -410,34 +410,83 @@ export default function FormulirPenelitian() {
       return;
     }
 
-    if (name === "suratPengantar") {
-      setSuratPengantarFile(file);
-      setIsSuratPengantarChecked(!!file);
-    }
-    if (name === "proposal") {
-      setProposalFile(file);
-      setIsProposalChecked(!!file);
-    }
-    if (name === "ktp") {
-      setKtpFile(file);
-      setIsKTPChecked(!!file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1]; // Mengambil string Base64 tanpa prefix data
+      if (name === "suratPengantar") {
+        setSuratPengantarFile(base64String);
+        setIsSuratPengantarChecked(!!file);
+      }
+      if (name === "proposal") {
+        setProposalFile(base64String);
+        setIsProposalChecked(!!file);
+      }
+      if (name === "ktp") {
+        setKtpFile(base64String);
+        setIsKTPChecked(!!file);
+      }
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
     }
   };
 
   // Fungsi untuk menangani submit form
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // Validasi untuk setiap field
-    if (!letterNumber) {
-      toast("Mohon isi kolom nomor surat!", {
+    const validationErrors = {
+      letterNumber: !letterNumber,
+      name: !name,
+      researcherName: !researcherName,
+      address: !address,
+      inputValue: !inputValue,
+      institution: !institution,
+      occupation: !occupation,
+      judulPenelitian: !judulPenelitian,
+      researchField: !researchField,
+      tujuanPenelitian: !tujuanPenelitian,
+      supervisorName: !supervisorName,
+      teamMembers: !teamMembers,
+      researchPeriod: !researchPeriod,
+      statusPenelitian: !statusPenelitian,
+      researchLocation: !researchLocation,
+      attachments:
+        !isSuratPengantarChecked || !isProposalChecked || !isKTPChecked,
+    };
+
+    const firstError = Object.keys(validationErrors).find(
+      (key) => validationErrors[key]
+    );
+
+    if (firstError) {
+      const errorMessages = {
+        letterNumber: "Mohon isi kolom nomor surat!",
+        name: "Mohon isi kolom nama!",
+        researcherName: "Mohon isi kolom nama peneliti!",
+        address: "Mohon isi kolom alamat rumah!",
+        inputValue: "Mohon isi kolom no. telepon/alamat Email!",
+        institution: "Mohon isi kolom Perguruan Tinggi/Instansi/Lembaga!",
+        occupation: "Mohon isi kolom Pekerjaan!",
+        judulPenelitian: "Mohon isi kolom Judul Penelitian!",
+        researchField: "Mohon isi kolom Bidang Penelitian/Jurusan!",
+        tujuanPenelitian: "Mohon pilih Tujuan Penelitian!",
+        supervisorName: "Mohon isi kolom Dosen Pembimbing/Penanggung Jawab!",
+        teamMembers: "Mohon isi kolom Anggota Tim Peneliti!",
+        researchPeriod: "Mohon isi kolom Waktu Penelitian!",
+        statusPenelitian: "Mohon pilih Status Penelitian!",
+        researchLocation: "Mohon isi kolom Lokasi Penelitian!",
+        attachments: "Mohon lengkapi semua lampiran yang diperlukan!",
+      };
+
+      toast(errorMessages[firstError], {
         style: {
           background: "#FF0000",
           color: "#FFFFFF",
           borderRadius: "10px",
           fontSize: "14px",
           textAlign: "center",
-          // padding: "10px 20px",
           width: "full",
           maxWidth: "900px",
         },
@@ -447,313 +496,75 @@ export default function FormulirPenelitian() {
       return;
     }
 
-    // Validasi untuk setiap field
-    if (!name) {
-      toast("Mohon isi kolom nama!", {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_SERVER}/api/penelitian`,
+        {
+          letterNumber,
+          name,
+          researcherName,
+          address,
+          inputValue,
+          institution,
+          occupation,
+          judulPenelitian,
+          researchField,
+          tujuanPenelitian,
+          supervisorName,
+          teamMembers,
+          researchPeriod,
+          statusPenelitian,
+          researchLocation,
+          isSuratPengantarChecked,
+          isProposalChecked,
+          isKTPChecked,
+          suratPengantarFile,
+          proposalFile,
+          ktpFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response?.status === 200) {
+        toast.success("Data Anda berhasil disimpan!", {
+          icon: null,
+          style: {
+            background: "#28A745",
+            color: "#FFFFFF",
+            borderRadius: "12px",
+            fontSize: "14px",
+            textAlign: "center",
+            // padding: "10px 20px",
+            maxWidth: "900px",
+          },
+          position: "top-center",
+          duration: 3000,
+        });
+        setTimeout(() => {
+          navigate("/proses-ajuan");
+        }, 3000);
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan saat menyimpan data. Silakan coba lagi.", {
+        icon: null,
         style: {
           background: "#FF0000",
           color: "#FFFFFF",
-          borderRadius: "10px",
+          borderRadius: "12px",
           fontSize: "14px",
           textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
+          padding: "10px 20px",
           maxWidth: "900px",
         },
         position: "top-center",
         duration: 3000,
       });
-      return;
+      console.log("Cek error: ", error);
     }
-
-    // Validasi untuk setiap field
-    if (!researcherName) {
-      toast("Mohon isi kolom nama peneliti!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!address) {
-      toast("Mohon isi kolom alamat rumah!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!inputValue) {
-      toast("Mohon isi kolom no. telepon/alamat Email!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!institution) {
-      toast("Mohon isi kolom Perguruan Tinggi/Instansi/Lembaga!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!occupation) {
-      toast("Mohon isi kolom Pekerjaan!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!judulPenelitian) {
-      toast("Mohon isi kolom Judul Penelitian!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!researchField) {
-      toast("Mohon isi kolom Bidang Penelitian/Jurusan!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!tujuanPenelitian) {
-      toast("Mohon pilih Tujuan Penelitian!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!supervisorName) {
-      toast("Mohon isi kolom Dosen Pembimbing/Penanggung Jawab!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!teamMembers) {
-      toast("Mohon isi kolom Anggota Tim Peneliti!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!researchPeriod) {
-      toast("Mohon isi kolom Waktu Penelitian!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!statusPenelitian) {
-      toast("Mohon pilih Status Penelitian!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!researchLocation) {
-      toast("Mohon isi kolom Lokasi Penelitian!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Validasi untuk setiap field
-    if (!isSuratPengantarChecked || !isProposalChecked || !isKTPChecked) {
-      toast("Mohon lengkapi semua lampiran yang diperlukan!", {
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "10px",
-          fontSize: "14px",
-          textAlign: "center",
-          // padding: "10px 20px",
-          width: "full",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
-      return;
-    }
-
-    // Jika semua field valid, tampilkan toast sukses dan navigasi
-    toast("Data Anda berhasil disimpan!", {
-      style: {
-        background: "#28A745",
-        color: "#FFFFFF",
-        borderRadius: "10px",
-        fontSize: "14px",
-        textAlign: "center",
-        // padding: "10px 20px",
-        width: "full",
-        maxWidth: "900px",
-      },
-      position: "top-center",
-      duration: 3000,
-    });
-
-    setTimeout(() => {
-      navigate("/proses-ajuan"); // Navigasi ke halaman proses ajuan
-    }, 3000);
-
-    // Lakukan submit data ke server atau tindakan lainnya
-    console.log("Data Pengguna Berhasil Disimpan!");
   };
 
   // Menggulir ke atas saat komponen dimuat
@@ -770,9 +581,9 @@ export default function FormulirPenelitian() {
           backgroundImage: `url(${FAQBackground})`,
         }}
       >
-        <h2 className="text-3xl font-bold">
-          Ajuan Permohonan Rekomendasi <br /> Penelitian, Observasi, Skripsi,
-          Tesis, atau Desertasi
+        <h2 className="text-2xl md:text-3xl font-bold">
+          Ajuan Permohonan Rekomendasi Penelitian, <br />
+          Observasi, Skripsi, Tesis, atau Desertasi
         </h2>
       </div>
 
@@ -801,19 +612,19 @@ export default function FormulirPenelitian() {
           isMobile ? "p-6 mb-10" : "p-8 mb-20"
         } rounded-lg shadow-lg`}
       >
-        <h3 className="text-xl font-bold mb-10">
+        <h3 className="text-lg md:text-xl font-bold mb-10">
           Formulir Permohonan Rekomendasi Penelitian/Survei Badan Kesatuan
           Bangsa dan Politik Provinsi Jawa timur
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Nomor Surat <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isLetterNumberValid &&
                   (isLetterNumberTouched || letterNumber.trim() === "")
                     ? "border-[#FF0000]"
@@ -839,14 +650,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Nama (Nama yang Mewakili/Mengajukan){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isNameValid || !isNameLengthValid
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
@@ -874,14 +685,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Nama Peneliti (Sesuai dengan Surat Pengantar){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isResearcherNameValid || !isResearcherNameLengthValid
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
@@ -911,7 +722,7 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Alamat Rumah (Sesuai dengan KTP, sertakan RT, RW, Kelurahan,
               Kecamatan, dan Kota)
               <span className="text-[#FF0000]">*</span>
@@ -919,7 +730,7 @@ export default function FormulirPenelitian() {
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   (!isAddressValid || !isAddressLengthValid) && isAddressTouched
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
@@ -950,13 +761,13 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               No. Telepon/Alamat Email <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isInputValid && isInputTouched
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
@@ -979,14 +790,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Perguruan Tinggi/Instansi/Lembaga{" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   (!isInstitutionValid || !isInstitutionLengthValid) &&
                   (isInstitutionTouched || institution.trim() === "")
                     ? "border-[#FF0000]"
@@ -1021,14 +832,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Pekerjaan (Diisi sesuai dengan KTP){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isOccupationValid &&
                   (isOccupationTouched || occupation.trim() === "")
                     ? "border-[#FF0000]"
@@ -1054,13 +865,13 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Judul Penelitian <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isJudulValid &&
                   (isJudulTouched || judulPenelitian.trim() === "")
                     ? "border-[#FF0000]"
@@ -1086,14 +897,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Bidang Penelitian (Jurusan){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isResearchFieldValid &&
                   (isResearchFieldTouched || researchField.trim() === "")
                     ? "border-[#FF0000]"
@@ -1119,7 +930,7 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Tujuan Penelitian <span className="text-[#FF0000]">*</span>
             </label>
             <div className="flex space-x-4 mt-2">
@@ -1131,7 +942,9 @@ export default function FormulirPenelitian() {
                   value="Skripsi"
                   onChange={handleTujuanPenelitianChange}
                 />
-                <span className="ml-2 text-sm text-gray-900">Skripsi</span>
+                <span className="ml-2 text-sm md:text-base text-gray-900">
+                  Skripsi
+                </span>
               </label>
               <label className="inline-flex items-center">
                 <input
@@ -1141,7 +954,9 @@ export default function FormulirPenelitian() {
                   value="Tesis"
                   onChange={handleTujuanPenelitianChange}
                 />
-                <span className="ml-2 text-sm text-gray-900">Tesis</span>
+                <span className="ml-2 text-sm md:text-base text-gray-900">
+                  Tesis
+                </span>
               </label>
               <label className="inline-flex items-center">
                 <input
@@ -1151,20 +966,22 @@ export default function FormulirPenelitian() {
                   value="Penelitian"
                   onChange={handleTujuanPenelitianChange}
                 />
-                <span className="ml-2 text-sm text-gray-900">Penelitian</span>
+                <span className="ml-2 text-sm md:text-base text-gray-900">
+                  Penelitian
+                </span>
               </label>
             </div>
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Dosen Pembimbing/Penanggung Jawab{" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isSupervisorValid &&
                   (isSupervisorTouched || supervisorName.trim() === "")
                     ? "border-[#FF0000]"
@@ -1190,14 +1007,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Anggota Tim Peneliti (Bila Tidak Ada, Isi dengan "-"){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isTeamMembersValid && isTeamMembersTouched
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
@@ -1223,14 +1040,14 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Waktu Penelitian (Sertakan Tanggal, Bulan, dan Tahun){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isResearchPeriodValid &&
                   (isResearchPeriodTouched || researchPeriod.trim() === "")
                     ? "border-[#FF0000]"
@@ -1256,7 +1073,7 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Status Penelitian <span className="text-[#FF0000]">*</span>
             </label>
             <div className="flex space-x-4 mt-2">
@@ -1268,7 +1085,9 @@ export default function FormulirPenelitian() {
                   value="Baru"
                   onChange={handleStatusPenelitianChange}
                 />
-                <span className="ml-2 text-sm text-gray-900">Baru</span>
+                <span className="ml-2 text-sm md:text-base text-gray-900">
+                  Baru
+                </span>
               </label>
               <label className="inline-flex items-center">
                 <input
@@ -1278,20 +1097,22 @@ export default function FormulirPenelitian() {
                   value="Perpanjangan"
                   onChange={handleStatusPenelitianChange}
                 />
-                <span className="ml-2 text-sm text-gray-900">Perpanjangan</span>
+                <span className="ml-2 text-sm md:text-base text-gray-900">
+                  Perpanjangan
+                </span>
               </label>
             </div>
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Lokasi Penelitian (Instansi/Mitra/Lembaga/Sekolah){" "}
               <span className="text-[#FF0000]">*</span>
             </label>
             <div className="relative">
               <input
                 type="text"
-                className={`w-full bg-transparent border-b-2 text-sm text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
+                className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
                   !isResearchLocationValid &&
                   (isResearchLocationTouched || researchLocation.trim() === "")
                     ? "border-[#FF0000]"
@@ -1318,7 +1139,7 @@ export default function FormulirPenelitian() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">
+            <label className="block font-medium mb-1 text-sm md:text-base">
               Melampirkan: <span className="text-[#FF0000]">*</span>
             </label>
             <div className="space-y-2">
@@ -1331,7 +1152,7 @@ export default function FormulirPenelitian() {
                     checked={isSuratPengantarChecked}
                     readOnly
                   />
-                  <span className="text-sm">
+                  <span className="text-sm md:text-base">
                     Surat Pengantar Instansi/Lembaga
                   </span>
                 </div>
@@ -1352,7 +1173,7 @@ export default function FormulirPenelitian() {
                     checked={isProposalChecked}
                     readOnly
                   />
-                  <span className="text-sm">Proposal</span>
+                  <span className="text-sm md:text-base">Proposal</span>
                 </div>
                 <input
                   type="file"
@@ -1371,7 +1192,7 @@ export default function FormulirPenelitian() {
                     checked={isKTPChecked}
                     readOnly
                   />
-                  <span className="text-sm">
+                  <span className="text-sm md:text-base">
                     <span className="italic">Foto copy</span> KTP/Identitas
                   </span>
                 </div>
@@ -1389,7 +1210,7 @@ export default function FormulirPenelitian() {
           <div className="text-end">
             <button
               type="submit"
-              className="mt-4 bg-[#2A629A] text-white font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
+              className="mt-4 bg-[#2A629A] text-white text-sm md:text-base font-medium px-5 py-2 rounded-full hover:bg-[#003285] transition duration-300"
             >
               Kirim Data
             </button>

@@ -24,7 +24,7 @@ export default function ProsesAjuan() {
             <h1 className="text-[#2A629A] text-2xl sm:text-3xl font-bold">
               Dokumen Ajuan Anda Sedang Diproses
             </h1>
-            <p className="text-gray-700 text-lg sm:text-lg font-semibold">
+            <p className="text-gray-700 text-base sm:text-lg font-semibold">
               Mohon cek Email Anda secara berkala.
             </p>
             <p className="text-gray-700 text-sm sm:text-base">
@@ -51,7 +51,7 @@ export default function ProsesAjuan() {
               className="bg-gray-500 text-white font-medium rounded-full py-2 px-4 sm:px-6 w-full max-w-xs text-sm sm:text-base hover:bg-gray-600 transition duration-300"
               onClick={() => navigate("/")}
             >
-              Kembali Beranda
+              Kembali ke Beranda
             </button>
           </div>
         </div>
