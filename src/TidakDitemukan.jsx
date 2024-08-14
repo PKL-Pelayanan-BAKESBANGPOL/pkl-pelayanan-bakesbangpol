@@ -11,7 +11,7 @@ export default function TidakDitemukan() {
           title="404 Animation"
         ></iframe>
       </div>
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-700 mb-2 text-center">
+      <h2 className="text-xl md:text-3xl font-bold text-gray-700 mb-2 text-center">
         Halaman Tidak Ditemukan!
       </h2>
       <p className="text-sm md:text-lg font-medium text-gray-600 mb-6 text-center">

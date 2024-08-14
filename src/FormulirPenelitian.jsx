@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxCrossCircled } from "react-icons/rx";
 import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
+import axios from "axios";
 import toast from "react-hot-toast";
 import FAQBackground from "./assets/FAQ Background.png";
 import Footer from "./Footer";
 import ScrollUp from "./ScrollUp";
+import Loader from "./Loader";
 
 export default function FormulirPenelitian() {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 767 }); // Menggunakan media query untuk memeriksa jika perangkat adalah mobile
+  const [isLoading, setIsLoading] = useState(false); // State untuk mengelola status loading
 
   // State untuk field Nomor Surat
   const [letterNumber, setLetterNumber] = useState("");
@@ -56,8 +59,9 @@ export default function FormulirPenelitian() {
 
   // State untuk field Judul Penelitian
   const [judulPenelitian, setJudulPenelitian] = useState("");
-  const [isJudulTouched, setIsJudulTouched] = useState(false);
-  const [isJudulValid, setIsJudulValid] = useState(true);
+  const [isJudulPenelitianTouched, setIsJudulPenelitianTouched] =
+    useState(false);
+  const [isJudulPenelitianValid, setIsJudulPenelitianValid] = useState(true);
 
   // State untuk field Bidang Penelitian/Jurusan
   const [researchField, setResearchField] = useState("");
@@ -91,14 +95,20 @@ export default function FormulirPenelitian() {
     useState(false);
   const [isResearchLocationValid, setIsResearchLocationValid] = useState(true);
 
-  // State untuk field Melampirkan
+  // State untuk checklist state Melampirkan
   const [isSuratPengantarChecked, setIsSuratPengantarChecked] = useState(false);
   const [isProposalChecked, setIsProposalChecked] = useState(false);
   const [isKTPChecked, setIsKTPChecked] = useState(false);
 
+  // State untuk menyimpan file dalam format Binary
   const [suratPengantarFile, setSuratPengantarFile] = useState("");
   const [proposalFile, setProposalFile] = useState("");
   const [ktpFile, setKtpFile] = useState("");
+
+  // State untuk mempratinjau file dan URL-nya
+  const [suratPengantarPreview, setSuratPengantarPreview] = useState("");
+  const [proposalPreview, setProposalPreview] = useState("");
+  const [ktpPreview, setKtpPreview] = useState("");
 
   // Fungsi untuk menangani perubahan input Nomor Surat
   const handleLetterNumberChange = (e) => {
@@ -122,7 +132,7 @@ export default function FormulirPenelitian() {
     }
   };
 
-  // Fungsi untuk menangani perubahan input nama
+  // Fungsi untuk menangani perubahan field Nama
   const handleNameChange = (e) => {
     const value = e.target.value;
     const sanitizedValue = value.replace(/\d/g, ""); // Menghapus angka
@@ -142,7 +152,7 @@ export default function FormulirPenelitian() {
     }
   };
 
-  // Fungsi untuk menangani perubahan input nama peneliti
+  // Fungsi untuk menangani perubahan filed Nama Peneliti
   const handleResearcherNameChange = (e) => {
     const value = e.target.value;
     const sanitizedValue = value.replace(/\d/g, ""); // Menghapus angka
@@ -162,7 +172,7 @@ export default function FormulirPenelitian() {
     }
   };
 
-  // Fungsi untuk menangani perubahan input alamat
+  // Fungsi untuk menangani perubahan field Alamat
   const handleAddressChange = (e) => {
     const value = e.target.value;
     setAddress(value);
@@ -198,13 +208,13 @@ export default function FormulirPenelitian() {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    // Validate input only if the field has been touched
+    // Validasi input hanya jika field sudah pernah disentuh
     if (isInputTouched) {
       setIsInputValid(value.trim().length > 0);
     }
   };
 
-  // Fungsi untuk menangani perubahan input Perguruan Tinggi/Instansi/Lembaga
+  // Fungsi untuk menangani perubahan field Perguruan Tinggi/Instansi/Lembaga
   const handleInstitutionChange = (e) => {
     const value = e.target.value;
     setInstitution(value);
@@ -222,17 +232,18 @@ export default function FormulirPenelitian() {
 
   const handleInstitutionBlur = () => {
     setIsInstitutionTouched(false);
-    // Validasi ulang pada blur jika inputnya kosong
+    // Validasi ulang pada blur jika field-nya kosong
     if (institution.trim() === "") {
       setIsInstitutionValid(false);
     }
   };
 
+  // Fungsi untuk menangani perubahan field Pekerjaan
   const handleOccupationChange = (e) => {
     const value = e.target.value;
     setOccupation(value);
 
-    // Validate input based on current value and touched status
+    // Validasi input berdasarkan nilai saat ini dan status yang disentuh
     if (isOccupationTouched || value.trim() === "") {
       setIsOccupationValid(value.trim().length > 0);
     }
@@ -243,33 +254,35 @@ export default function FormulirPenelitian() {
   };
 
   const handleOccupationBlur = () => {
-    // Revalidate on blur if the input is empty
+    // Validasi ulang pada blur jika field-nya kosong
     if (occupation.trim() === "") {
       setIsOccupationValid(false);
     }
   };
 
-  const handleJudulChange = (e) => {
+  // Fungsi untuk menangani perubahan field Judul Penelitian
+  const handleJudulPenelitianChange = (e) => {
     const value = e.target.value;
     setJudulPenelitian(value);
 
-    // Validate input based on current value and touched status
-    if (isJudulTouched || value.trim() === "") {
-      setIsJudulValid(value.trim().length > 0);
+    // Validasi input berdasarkan nilai saat ini dan status yang disentuh
+    if (isJudulPenelitianTouched || value.trim() === "") {
+      setIsJudulPenelitianValid(value.trim().length > 0);
     }
   };
 
-  const handleJudulFocus = () => {
-    setIsJudulTouched(true);
+  const handleJudulPenelitianFocus = () => {
+    setIsJudulPenelitianTouched(true);
   };
 
-  const handleJudulBlur = () => {
-    // Revalidate on blur if the input is empty
+  const handleJudulPenelitianBlur = () => {
+    // Validasi ulang pada blur jika field-nya kosong
     if (judulPenelitian.trim() === "") {
-      setIsJudulValid(false);
+      setIsJudulPenelitianValid(false);
     }
   };
 
+  // Fungsi untuk menangani perubahan field Bidang Penelitian
   const handleResearchFieldChange = (e) => {
     const value = e.target.value;
     setResearchField(value);
@@ -296,7 +309,7 @@ export default function FormulirPenelitian() {
     setTujuanPenelitian(e.target.value);
   };
 
-  // Fungsi untuk menangani perubahan input supervisorName
+  // Fungsi untuk menangani perubahan field Dosen Pembimbing/Penanggung Jawab
   const handleSupervisorChange = (e) => {
     const value = e.target.value;
     setSupervisorName(value);
@@ -318,7 +331,7 @@ export default function FormulirPenelitian() {
     }
   };
 
-  // Fungsi untuk menangani perubahan input Anggota Tim Peneliti
+  // Fungsi untuk menangani perubahan field Anggota Tim Peneliti
   const handleTeamMembersChange = (e) => {
     const value = e.target.value;
     setTeamMembers(value);
@@ -338,7 +351,7 @@ export default function FormulirPenelitian() {
     setIsTeamMembersTouched(false);
   };
 
-  // Fungsi untuk menangani perubahan input Waktu Penelitian
+  // Fungsi untuk menangani perubahan field Waktu Penelitian
   const handleResearchPeriodChange = (e) => {
     const value = e.target.value;
     setResearchPeriod(value);
@@ -389,19 +402,40 @@ export default function FormulirPenelitian() {
 
   // Fungsi untuk menangani perubahan file
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    const file = files[0];
+    const { name, files } = e.target; // Mengambil nama dan file dari event target
+    const file = files[0]; // Mengambil file pertama dari array files
+    console.log("Cek file: ", file);
+
+    if (!file) {
+      // Jika file dibatalkan (tidak ada file yang dipilih)
+      if (name === "suratPengantar") {
+        setSuratPengantarFile(null);
+        setSuratPengantarPreview("");
+        setIsSuratPengantarChecked(false);
+      }
+      if (name === "proposal") {
+        setProposalFile(null);
+        setProposalPreview("");
+        setIsProposalChecked(false);
+      }
+      if (name === "ktp") {
+        setKtpFile(null);
+        setKtpPreview("");
+        setIsKTPChecked(false);
+      }
+      return;
+    }
 
     // Validasi ukuran file
-    if (file && file.size > 5 * 1024 * 1024) {
-      toast("Ukuran file tidak boleh lebih dari 5 MB!", {
+    if (file && file.size > 10 * 1024 * 1024) {
+      // Jika ukuran file lebih dari 10 MB, tampilkan pesan toast
+      toast("Ukuran file tidak boleh lebih dari 10 MB!", {
         style: {
           background: "#FF0000",
           color: "#FFFFFF",
           borderRadius: "12px",
           fontSize: "14px",
           textAlign: "center",
-          // padding: "10px 20px",
           maxWidth: "900px",
         },
         position: "top-center",
@@ -410,32 +444,41 @@ export default function FormulirPenelitian() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result.split(",")[1]; // Mengambil string Base64 tanpa prefix data
-      if (name === "suratPengantar") {
-        setSuratPengantarFile(base64String);
-        setIsSuratPengantarChecked(!!file);
-      }
-      if (name === "proposal") {
-        setProposalFile(base64String);
-        setIsProposalChecked(!!file);
-      }
-      if (name === "ktp") {
-        setKtpFile(base64String);
-        setIsKTPChecked(!!file);
-      }
-    };
+    // Membuat URL pratinjau file
+    const previewUrl = URL.createObjectURL(file);
 
-    if (file) {
-      reader.readAsDataURL(file);
+    // Memeriksa nama file dan menetapkan string Base64 ke state yang sesuai
+    if (name === "suratPengantar") {
+      setSuratPengantarFile(file);
+      setSuratPengantarPreview(previewUrl);
+      setIsSuratPengantarChecked(true); // Menandai bahwa file sudah dipilih
+    }
+    if (name === "proposal") {
+      setProposalFile(file);
+      setProposalPreview(previewUrl);
+      setIsProposalChecked(true); // Menandai bahwa file sudah dipilih
+    }
+    if (name === "ktp") {
+      setKtpFile(file);
+      setKtpPreview(previewUrl);
+      setIsKTPChecked(true); // Menandai bahwa file sudah dipilih
     }
   };
 
-  // Fungsi untuk menangani submit form
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // Fungsi untuk membersihkan URL pratinjau saat komponen di-unmount
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(suratPengantarPreview);
+      URL.revokeObjectURL(proposalPreview);
+      URL.revokeObjectURL(ktpPreview);
+    };
+  }, [suratPengantarPreview, proposalPreview, ktpPreview]);
 
+  // Fungsi untuk menangani tombol Kirim Data
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Menggunakan objek validasi untuk memudahkan pengecekan
     const validationErrors = {
       letterNumber: !letterNumber,
       name: !name,
@@ -456,17 +499,18 @@ export default function FormulirPenelitian() {
         !isSuratPengantarChecked || !isProposalChecked || !isKTPChecked,
     };
 
+    // Menemukan kesalahan pertama dan menampilkan pesan yang sesuai
     const firstError = Object.keys(validationErrors).find(
       (key) => validationErrors[key]
     );
 
     if (firstError) {
       const errorMessages = {
-        letterNumber: "Mohon isi kolom nomor surat!",
-        name: "Mohon isi kolom nama!",
-        researcherName: "Mohon isi kolom nama peneliti!",
-        address: "Mohon isi kolom alamat rumah!",
-        inputValue: "Mohon isi kolom no. telepon/alamat Email!",
+        letterNumber: "Mohon isi kolom Nomor Surat!",
+        name: "Mohon isi kolom Nama!",
+        researcherName: "Mohon isi kolom Nama Peneliti!",
+        address: "Mohon isi kolom Alamat Rumah!",
+        inputValue: "Mohon isi kolom No. Telepon/Alamat Email!",
         institution: "Mohon isi kolom Perguruan Tinggi/Instansi/Lembaga!",
         occupation: "Mohon isi kolom Pekerjaan!",
         judulPenelitian: "Mohon isi kolom Judul Penelitian!",
@@ -496,38 +540,71 @@ export default function FormulirPenelitian() {
       return;
     }
 
+    setIsLoading(true); // Tampilkan loader
+
+    // Membuat FormData
+    const formData = new FormData();
+    formData.append("letterNumber", letterNumber);
+    formData.append("name", name);
+    formData.append("researcherName", researcherName);
+    formData.append("address", address);
+    formData.append("inputValue", inputValue);
+    formData.append("institution", institution);
+    formData.append("occupation", occupation);
+    formData.append("judulPenelitian", judulPenelitian);
+    formData.append("researchField", researchField);
+    formData.append("tujuanPenelitian", tujuanPenelitian);
+    formData.append("supervisorName", supervisorName);
+    formData.append("teamMembers", teamMembers);
+    formData.append("researchPeriod", researchPeriod);
+    formData.append("statusPenelitian", statusPenelitian);
+    formData.append("researchLocation", researchLocation);
+
+    // Hanya menambahkan file jika file ada
+    if (isSuratPengantarChecked && suratPengantarFile) {
+      formData.append("suratPengantarFile", suratPengantarFile);
+    }
+    if (isProposalChecked && proposalFile) {
+      formData.append("proposalFile", proposalFile);
+    }
+    if (isKTPChecked && ktpFile) {
+      formData.append("ktpFile", ktpFile);
+    }
+
+    // Mengecek data yang dikirim
+    console.log("Data ajuan penelitian:", {
+      letterNumber,
+      name,
+      researcherName,
+      address,
+      inputValue,
+      institution,
+      occupation,
+      judulPenelitian,
+      researchField,
+      tujuanPenelitian,
+      supervisorName,
+      teamMembers,
+      researchPeriod,
+      statusPenelitian,
+      researchLocation,
+      suratPengantarFile,
+      proposalFile,
+      ktpFile,
+    });
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_SERVER}/api/penelitian`,
-        {
-          letterNumber,
-          name,
-          researcherName,
-          address,
-          inputValue,
-          institution,
-          occupation,
-          judulPenelitian,
-          researchField,
-          tujuanPenelitian,
-          supervisorName,
-          teamMembers,
-          researchPeriod,
-          statusPenelitian,
-          researchLocation,
-          isSuratPengantarChecked,
-          isProposalChecked,
-          isKTPChecked,
-          suratPengantarFile,
-          proposalFile,
-          ktpFile,
-        },
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
+      // Setelah proses pengiriman data selesai, hilangkan Loader
+      setIsLoading(false);
 
       if (response?.status === 200) {
         toast.success("Data Anda berhasil disimpan!", {
@@ -538,7 +615,6 @@ export default function FormulirPenelitian() {
             borderRadius: "12px",
             fontSize: "14px",
             textAlign: "center",
-            // padding: "10px 20px",
             maxWidth: "900px",
           },
           position: "top-center",
@@ -557,13 +633,18 @@ export default function FormulirPenelitian() {
           borderRadius: "12px",
           fontSize: "14px",
           textAlign: "center",
-          padding: "10px 20px",
           maxWidth: "900px",
         },
         position: "top-center",
         duration: 3000,
       });
-      console.log("Cek error: ", error);
+      setIsLoading(false); // Hilangkan Loader jika terjadi error
+      console.log(
+        "Cek error: ",
+        error.response?.data,
+        error.response?.status,
+        error.message
+      );
     }
   };
 
@@ -576,14 +657,14 @@ export default function FormulirPenelitian() {
     <div className="min-h-screen bg-[#EEF5FF]">
       {/* Header Section */}
       <div
-        className="text-center mb-5 p-10 bg-cover bg-center bg-no-repeat"
+        className="text-center mb-5 p-5 md:p-10 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${FAQBackground})`,
         }}
       >
-        <h2 className="text-2xl md:text-3xl font-bold">
-          Ajuan Permohonan Rekomendasi Penelitian, <br />
-          Observasi, Skripsi, Tesis, atau Desertasi
+        <h2 className="text-xl md:text-2xl font-bold">
+          Ajuan Permohonan Rekomendasi Penelitian, Observasi, Skripsi, Tesis,
+          atau Desertasi
         </h2>
       </div>
 
@@ -612,7 +693,7 @@ export default function FormulirPenelitian() {
           isMobile ? "p-6 mb-10" : "p-8 mb-20"
         } rounded-lg shadow-lg`}
       >
-        <h3 className="text-lg md:text-xl font-bold mb-10">
+        <h3 className="text-base md:text-lg font-bold mb-10">
           Formulir Permohonan Rekomendasi Penelitian/Survei Badan Kesatuan
           Bangsa dan Politik Provinsi Jawa timur
         </h3>
@@ -872,24 +953,24 @@ export default function FormulirPenelitian() {
               <input
                 type="text"
                 className={`w-full bg-transparent border-b-2 text-sm md:text-base text-gray-900 py-2 px-0 focus:outline-none focus:ring-0 ${
-                  !isJudulValid &&
-                  (isJudulTouched || judulPenelitian.trim() === "")
+                  !setIsJudulPenelitianValid &&
+                  (isJudulPenelitianTouched || judulPenelitian.trim() === "")
                     ? "border-[#FF0000]"
                     : "border-gray-300 focus:border-[#2A629A]"
                 }`}
                 placeholder="Judul Penelitian"
                 value={judulPenelitian}
-                onFocus={handleJudulFocus}
-                onBlur={handleJudulBlur}
-                onChange={handleJudulChange}
+                onFocus={handleJudulPenelitianFocus}
+                onBlur={handleJudulPenelitianBlur}
+                onChange={handleJudulPenelitianChange}
               />
-              {!isJudulValid &&
-                (isJudulTouched || judulPenelitian.trim() === "") && (
+              {!isJudulPenelitianValid &&
+                (isJudulPenelitianTouched || judulPenelitian.trim() === "") && (
                   <RxCrossCircled className="absolute right-0 top-1/2 transform -translate-y-1/2 text-[#FF0000] w-[20px] h-[20px] mr-2" />
                 )}
             </div>
-            {!isJudulValid &&
-              (isJudulTouched || judulPenelitian.trim() === "") && (
+            {!isJudulPenelitianValid &&
+              (isJudulPenelitianTouched || judulPenelitian.trim() === "") && (
                 <div className="flex items-center text-[#FF0000] text-xs mt-1 text-left">
                   <p>Judul Penelitian tidak boleh kosong</p>
                 </div>
@@ -933,7 +1014,8 @@ export default function FormulirPenelitian() {
             <label className="block font-medium mb-1 text-sm md:text-base">
               Tujuan Penelitian <span className="text-[#FF0000]">*</span>
             </label>
-            <div className="flex space-x-4 mt-2">
+            {/* <div className="flex space-x-4 mt-2"> */}
+            <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-12 mt-2">
               <label className="inline-flex items-center">
                 <input
                   type="radio"
@@ -1076,7 +1158,8 @@ export default function FormulirPenelitian() {
             <label className="block font-medium mb-1 text-sm md:text-base">
               Status Penelitian <span className="text-[#FF0000]">*</span>
             </label>
-            <div className="flex space-x-4 mt-2">
+            {/* <div className="flex space-x-4 mt-2"> */}
+            <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-12 mt-2">
               <label className="inline-flex items-center">
                 <input
                   type="radio"
@@ -1163,6 +1246,17 @@ export default function FormulirPenelitian() {
                   onChange={handleFileChange}
                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 />
+                {isSuratPengantarChecked && suratPengantarFile && (
+                  <a
+                    href={suratPengantarPreview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                  >
+                    <FaEye size={20} className="mr-1" />
+                    Pratinjau File
+                  </a>
+                )}
               </div>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center mb-2 md:mb-0">
@@ -1182,6 +1276,17 @@ export default function FormulirPenelitian() {
                   onChange={handleFileChange}
                   accept=".pdf,.doc,.docx"
                 />
+                {isProposalChecked && proposalFile && (
+                  <a
+                    href={proposalPreview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                  >
+                    <FaEye size={20} className="mr-1" />
+                    Pratinjau File
+                  </a>
+                )}
               </div>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center mb-2 md:mb-0">
@@ -1203,6 +1308,17 @@ export default function FormulirPenelitian() {
                   onChange={handleFileChange}
                   accept=".pdf,.jpg,.jpeg,.png"
                 />
+                {isKTPChecked && ktpFile && (
+                  <a
+                    href={ktpPreview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                  >
+                    <FaEye size={20} className="mr-1" />
+                    Pratinjau File
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -1218,8 +1334,26 @@ export default function FormulirPenelitian() {
         </form>
       </div>
 
+      {/* Loader Section */}
+      <div>
+        {isLoading && (
+          <div
+            className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-scroll transition-opacity duration-300  ${
+              isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <div
+              className={`relative p-4 w-full max-w-3xl max-h-full transform transition-transform duration-300 ease-in-out ${
+                isLoading ? "translate-y-0" : "-translate-y-full"
+              }`}
+            >
+              <Loader />
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* ScrollUp Button */}
-      {/* {isMobile ? "" : <ScrollUp />} */}
       <ScrollUp />
 
       {/* Footer Section */}

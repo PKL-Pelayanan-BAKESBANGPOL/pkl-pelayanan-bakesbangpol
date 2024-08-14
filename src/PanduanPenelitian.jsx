@@ -18,12 +18,12 @@ export default function PanduanPenelitian() {
       <div className="min-h-screen bg-[#EEF5FF]">
         {/* Header Section */}
         <div
-          className="text-center mb-5 p-10 bg-cover bg-center bg-no-repeat"
+          className="text-center mb-5 p-5 md:p-10 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${FAQBackground})`,
           }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold">
+          <h2 className="text-xl md:text-2xl font-bold">
             Panduan Layanan Permohonan Rekomendasi Penelitian/Magang
           </h2>
         </div>
@@ -49,7 +49,7 @@ export default function PanduanPenelitian() {
 
         {/* Requirements Section */}
         <div className="text-center">
-          <h2 className="text-xl md:text-2xl font-bold text-[#003285] px-10">
+          <h2 className="text-lg md:text-xl font-bold text-[#003285] px-5 md:px-10">
             Sebelum mengajukan permohonan, pastikan Anda telah menyiapkan
             berkas-berkas berikut:
           </h2>
@@ -118,7 +118,7 @@ export default function PanduanPenelitian() {
         {/* Proses Pengajuan Section */}
         <div className="bg-[#EEF5FF] py-5">
           <div className="text-center">
-            <h2 className="text-xl md:text-2xl font-bold text-[#003285] px-4">
+            <h2 className="text-lg md:text-xl font-bold text-[#003285] px-4">
               Proses Pengajuan Rekomendasi Penelitian
             </h2>
           </div>

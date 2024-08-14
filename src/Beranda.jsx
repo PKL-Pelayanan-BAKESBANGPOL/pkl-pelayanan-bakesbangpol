@@ -195,63 +195,6 @@ export default function Beranda() {
         </div>
       </div>
 
-      {/* Grid Section
-      <div id="grid-section" className="bg-[#EEF5FF] py-16">
-        <div className="max-w-6xl mx-auto px-4 md:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
-              <FaArrowsDownToPeople className="w-20 h-20 mb-4 text-[#2A629A]" />
-              <h3 className="text-2xl font-semibold mb-2">Ormas</h3>
-              <p className="text-gray-600 mb-4">
-                Pendaftaran Ormas dan Pelaporan Keberadaan Ormas
-              </p>
-              <a
-                href="#"
-                className="text-[#86B6F6] hover:underline flex items-center"
-              >
-                Baca Selengkapnya{" "}
-                <span className="ml-2">
-                  <GoArrowRight />
-                </span>
-              </a>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
-              <ImSearch className="w-20 h-20 mb-4 text-[#2A629A]" />
-              <h3 className="text-2xl font-semibold mb-2">Penelitian</h3>
-              <p className="text-gray-600 mb-4">
-                Perizinan Rekomendasi Penelitian Observasi, Skripsi, Tesis,
-                Disertasi, Magang, PKL, PKN, KKN
-              </p>
-              <a
-                href="/persyaratan-perizinan-rekomendasi-penelitian"
-                className="text-[#86B6F6] hover:underline flex items-center"
-              >
-                Baca Selengkapnya{" "}
-                <span className="ml-2">
-                  <GoArrowRight />
-                </span>
-              </a>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
-              <GiHumanPyramid className="w-20 h-20 mb-4 text-[#2A629A]" />
-              <h3 className="text-2xl font-semibold mb-2">Parpol</h3>
-              <p className="text-gray-600 mb-4">
-                Pengurusan Surat Keterangan Terdaftar (SKT) Parpol
-              </p>
-              <a
-                href="#"
-                className="text-[#86B6F6] hover:underline flex items-center"
-              >
-                Baca Selengkapnya{" "}
-                <span className="ml-2">
-                  <GoArrowRight />
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       {/* Grid Section */}
       <div id="grid-section" className="bg-[#EEF5FF] py-16">
         <div className="max-w-6xl mx-auto px-4 md:px-10">
@@ -312,39 +255,6 @@ export default function Beranda() {
                 </span>
               </a>
             </div>
-            {/* <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
-              <FaRegCommentDots className="w-20 h-20 mb-4 text-[#2A629A]" />
-              <h3 className="text-2xl font-semibold mb-2">Testimoni Layanan</h3>
-              <p className="text-gray-600 mb-4">
-                Baca testimoni dari pengguna layanan kami dan bagaimana kami
-                membantu mereka.
-              </p>
-              <a
-                href="/testimoni-layanan-rekomendasi-penelitian"
-                className="text-[#86B6F6] hover:underline flex items-center"
-              >
-                Baca Selengkapnya{" "}
-                <span className="ml-2">
-                  <GoArrowRight />
-                </span>
-              </a>
-            </div> */}
-            {/* <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center md:items-start text-center md:text-left transition-transform duration-300 ease-in-out transform hover:scale-105">
-              <FaArrowsDownToPeople className="w-20 h-20 mb-4 text-[#2A629A]" />
-              <h3 className="text-2xl font-semibold mb-2">Pusat Bantuan</h3>
-              <p className="text-gray-600 mb-4">
-                Temukan jawaban dari pertanyaan umum dan bantuan lainnya.
-              </p>
-              <a
-                href="/pusat-bantuan"
-                className="text-[#86B6F6] hover:underline flex items-center"
-              >
-                Baca Selengkapnya{" "}
-                <span className="ml-2">
-                  <GoArrowRight />
-                </span>
-              </a>
-            </div> */}
           </div>
         </div>
       </div>
@@ -352,17 +262,14 @@ export default function Beranda() {
       {/* Search Questions Section */}
       <div className="bg-[#EEF5FF] pb-16">
         <div
-          className="text-center mb-20 p-16 bg-cover bg-center bg-no-repeat"
+          className="text-center mb-20 px-5 py-10 md:py-16 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${FAQBackground})`,
           }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+          <h2 className="text-xl md:text-2xl font-bold mb-2">
             Pertanyaan yang Sering Diajukan
           </h2>
-          {/* <p className="text-gray-500 text-base font-medium">
-            Punya pertanyaan? Kami di sini untuk membantu Anda.
-          </p> */}
           <p className="text-gray-500 text-sm md:text-base font-medium">
             Temukan jawaban dari pertanyaan yang sering diajukan mengenai
             layanan kami.
@@ -370,7 +277,7 @@ export default function Beranda() {
           <input
             type="text"
             placeholder="Cari pertanyaan..."
-            className="mt-4 p-2 w-full max-w-lg border-2 border-[#86B6F6] focus:border-[#2A629A] rounded-full focus:outline-none pl-4 text-sm"
+            className="mt-4 py-2 w-[250px] md:w-full max-w-lg border-2 border-[#86B6F6] focus:border-[#2A629A] rounded-full focus:outline-none pl-4 text-xs md:text-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -396,7 +303,7 @@ export default function Beranda() {
                   height="350"
                   title="Search Not Found Animation"
                 ></iframe>
-                <p className="text-base md:text-lg font-medium text-gray-700 text-center">
+                <p className="text-sm md:text-base font-medium text-gray-700 text-center">
                   Pencarian pertanyaan tidak ditemukan.
                 </p>
               </div>

@@ -28,11 +28,11 @@ export default function SyaratPenelitian() {
             PERSYARATAN PERIZINAN REKOMENDASI <br />
             PENELITIAN DI PROVINSI JAWA TIMUR
           </h1> */}
-          <h1 className="text-2xl md:text-3xl font-bold">
-            PERSYARATAN PERIZINAN REKOMENDASI
+          <h1 className="text-xl md:text-3xl font-bold">
+            PERSYARATAN PERIZINAN REKOMENDASI PENELITIAN
           </h1>
-          <h1 className="text-2xl md:text-3xl font-bold mb-10">
-            PENELITIAN DI PROVINSI JAWA TIMUR
+          <h1 className="text-xl md:text-3xl font-bold mb-10">
+            DI PROVINSI JAWA TIMUR
           </h1>
 
           <div className="text-left text-lg space-y-4">
@@ -295,7 +295,7 @@ export default function SyaratPenelitian() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 p-4 m-4 md:px-10 max-w-6xl mx-auto">
             <Link to="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi">
-              <button className="bg-[#86B6F6] text-white px-6 py-7 rounded-lg shadow-lg hover:bg-blue-400 transition duration-300 w-full text-center font-medium text-base md:text-lg">
+              <button className="bg-[#86B6F6] text-white px-6 py-7 rounded-lg shadow-lg hover:bg-blue-400 transition duration-300 w-full text-center font-medium text-sm md:text-base">
                 Formulir Permohonan Rekomendasi Penelitian/Observasi/
                 <span className="block md:inline">
                   {" "}
@@ -304,7 +304,7 @@ export default function SyaratPenelitian() {
               </button>
             </Link>
             <Link to="/formulir-magang/pkl/pkn/kkn">
-              <button className="bg-[#86B6F6] text-white px-6 py-4 rounded-lg shadow-lg hover:bg-blue-400 transition duration-300 w-full text-center font-medium text-base md:text-lg">
+              <button className="bg-[#86B6F6] text-white px-6 py-7 rounded-lg shadow-lg hover:bg-blue-400 transition duration-300 w-full text-center font-medium text-sm md:text-base">
                 Formulir Permohonan Rekomendasi Magang/Praktek Kerja Lapang/
                 <span className="block md:inline">
                   {" "}
@@ -318,7 +318,7 @@ export default function SyaratPenelitian() {
         {/* Notes Section */}
         <div className="bg-[#EEF5FF] pb-5">
           <div className="max-w-6xl mx-auto p-4 md:px-10">
-            <h2 className="text-xl font-bold mb-4">Catatan:</h2>
+            <h2 className="text-base md:text-xl font-bold mb-4">Catatan:</h2>
             <ul className="list-disc list-inside space-y-2">
               <li className="text-sm md:text-base">
                 <span className="font-bold">Pelayanan ini bersifat gratis</span>{" "}

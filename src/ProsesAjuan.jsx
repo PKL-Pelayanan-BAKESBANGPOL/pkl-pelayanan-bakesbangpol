@@ -21,13 +21,13 @@ export default function ProsesAjuan() {
             className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-5 sm:mb-6"
           ></iframe>
           <div className="text-center space-y-3 sm:space-y-4">
-            <h1 className="text-[#2A629A] text-2xl sm:text-3xl font-bold">
+            <h1 className="text-[#2A629A] text-xl sm:text-2xl font-bold">
               Dokumen Ajuan Anda Sedang Diproses
             </h1>
-            <p className="text-gray-700 text-base sm:text-lg font-semibold">
+            <p className="text-gray-700 text-sm md:text-base font-semibold">
               Mohon cek Email Anda secara berkala.
             </p>
-            <p className="text-gray-700 text-sm sm:text-base">
+            <p className="text-gray-700 text-sm md:text-base">
               Untuk kepentingan perbaikan mutu pelayanan di BAKESBANGPOL
               Provinsi Jawa Timur, pemohon diwajibkan mengisi Survei Kepuasan
               Masyarakat (SKM) di bawah ini.

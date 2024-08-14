@@ -21,12 +21,12 @@ export default function LayananKonsultasi() {
       <div className="min-h-screen bg-[#EEF5FF]">
         {/* Header Section */}
         <div
-          className="text-center mb-5 p-10 bg-cover bg-center bg-no-repeat"
+          className="text-center mb-5 p-5 md:p-10 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${FAQBackground})`,
           }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold">
+          <h2 className="text-xl md:text-2xl font-bold">
             Layanan Konsultasi Permohonan Rekomendasi Magang/Penelitian <br />
             BAKESBANGPOL Provinsi Jawa Timur
           </h2>
