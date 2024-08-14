@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxCrossCircled } from "react-icons/rx";
@@ -94,9 +94,16 @@ export default function FormulirPenelitian() {
   const [ktpFile, setKtpFile] = useState("");
 
   // State untuk mempratinjau file dan URL-nya
-  const [suratPermohonanPreview, setSuratPermohonanPreview] = useState("");
-  const [proposalPreview, setProposalPreview] = useState("");
-  const [ktpPreview, setKtpPreview] = useState("");
+  const [suratPermohonanPreview, setSuratPermohonanPreview] = useState(null);
+  const [proposalPreview, setProposalPreview] = useState(null);
+  const [ktpPreview, setKtpPreview] = useState(null);
+
+  // Refs untuk menyimpan URL yang dihasilkan
+  const previewRefs = useRef({
+    suratPermohonanPreview: null,
+    proposalPreview: null,
+    ktpPreview: null,
+  });
 
   // Fungsi untuk menangani perubahan input Nomor Surat
   const handleLetterNumberChange = (e) => {
@@ -356,17 +363,17 @@ export default function FormulirPenelitian() {
       // Jika file dibatalkan (tidak ada file yang dipilih)
       if (name === "suratPermohonan") {
         setSuratPermohonanFile(null);
-        setSuratPermohonanPreview("");
+        setSuratPermohonanPreview(null);
         setIsSuratPermohonanChecked(false);
       }
       if (name === "proposal") {
         setProposalFile(null);
-        setProposalPreview("");
+        setProposalPreview(null);
         setIsProposalChecked(false);
       }
       if (name === "ktp") {
         setKtpFile(null);
-        setKtpPreview("");
+        setKtpPreview(null);
         setIsKTPChecked(false);
       }
       return;
@@ -393,32 +400,33 @@ export default function FormulirPenelitian() {
     // Membuat URL pratinjau file
     const previewUrl = URL.createObjectURL(file);
 
-    // Memeriksa nama file dan menetapkan string Base64 ke state yang sesuai
+    // Menyimpan URL di refs untuk referensi di kemudian hari
+    previewRefs.current[name] = previewUrl;
+
+    // Memeriksa nama file dan menyimpan URL preview ke state yang sesuai
     if (name === "suratPermohonan") {
       setSuratPermohonanFile(file);
       setSuratPermohonanPreview(previewUrl);
-      setIsSuratPermohonanChecked(true); // Menandai bahwa file sudah dipilih
-    }
-    if (name === "proposal") {
+      setIsSuratPermohonanChecked(true);
+    } else if (name === "proposal") {
       setProposalFile(file);
       setProposalPreview(previewUrl);
-      setIsProposalChecked(true); // Menandai bahwa file sudah dipilih
-    }
-    if (name === "ktp") {
+      setIsProposalChecked(true);
+    } else if (name === "ktp") {
       setKtpFile(file);
       setKtpPreview(previewUrl);
-      setIsKTPChecked(true); // Menandai bahwa file sudah dipilih
+      setIsKTPChecked(true);
     }
   };
 
   // Fungsi untuk membersihkan URL pratinjau saat komponen di-unmount
   useEffect(() => {
     return () => {
-      URL.revokeObjectURL(suratPermohonanPreview);
-      URL.revokeObjectURL(proposalPreview);
-      URL.revokeObjectURL(ktpPreview);
+      Object.values(previewRefs.current).forEach((url) => {
+        if (url) URL.revokeObjectURL(url);
+      });
     };
-  }, [suratPermohonanPreview, proposalPreview, ktpPreview]);
+  }, []);
 
   // Fungsi untuk menangani tombol Kirim Data
   const handleSubmit = async (e) => {
@@ -482,56 +490,56 @@ export default function FormulirPenelitian() {
       return;
     }
 
-    setIsLoading(true); // Tampilkan loader
-
-    // Membuat FormData
-    const formData = new FormData();
-    formData.append("letterNumber", letterNumber);
-    formData.append("applicantsName", applicantsName);
-    formData.append("address", address);
-    formData.append("inputValue", inputValue);
-    formData.append("institution", institution);
-    formData.append("occupation", occupation);
-    formData.append("judul", judul);
-    formData.append("tujuanPermohonan", tujuanPermohonan);
-    formData.append("supervisorName", supervisorName);
-    formData.append("teamMembers", teamMembers);
-    formData.append("period", period);
-    formData.append("statusPermohonan", statusPermohonan);
-    formData.append("location", location);
-
-    // Hanya menambahkan file jika file ada
-    if (isSuratPermohonanChecked && suratPermohonanFile) {
-      formData.append("suratPermohonanFile", suratPermohonanFile);
-    }
-    if (isProposalChecked && proposalFile) {
-      formData.append("proposalFile", proposalFile);
-    }
-    if (isKTPChecked && ktpFile) {
-      formData.append("ktpFile", ktpFile);
-    }
-
-    // Mengecek data yang dikirim
-    console.log("Data ajuan magang:", {
-      letterNumber,
-      applicantsName,
-      address,
-      inputValue,
-      institution,
-      occupation,
-      judul,
-      tujuanPermohonan,
-      supervisorName,
-      teamMembers,
-      period,
-      statusPermohonan,
-      location,
-      suratPermohonanFile,
-      proposalFile,
-      ktpFile,
-    });
-
     try {
+      setIsLoading(true); // Tampilkan loader
+
+      // Membuat FormData
+      const formData = new FormData();
+      formData.append("letterNumber", letterNumber);
+      formData.append("applicantsName", applicantsName);
+      formData.append("address", address);
+      formData.append("inputValue", inputValue);
+      formData.append("institution", institution);
+      formData.append("occupation", occupation);
+      formData.append("judul", judul);
+      formData.append("tujuanPermohonan", tujuanPermohonan);
+      formData.append("supervisorName", supervisorName);
+      formData.append("teamMembers", teamMembers);
+      formData.append("period", period);
+      formData.append("statusPermohonan", statusPermohonan);
+      formData.append("location", location);
+
+      // Hanya menambahkan file jika file ada
+      if (isSuratPermohonanChecked && suratPermohonanFile) {
+        formData.append("suratPermohonanFile", suratPermohonanFile);
+      }
+      if (isProposalChecked && proposalFile) {
+        formData.append("proposalFile", proposalFile);
+      }
+      if (isKTPChecked && ktpFile) {
+        formData.append("ktpFile", ktpFile);
+      }
+
+      // Mengecek data yang dikirim
+      console.log("Data ajuan magang:", {
+        letterNumber,
+        applicantsName,
+        address,
+        inputValue,
+        institution,
+        occupation,
+        judul,
+        tujuanPermohonan,
+        supervisorName,
+        teamMembers,
+        period,
+        statusPermohonan,
+        location,
+        suratPermohonanFile,
+        proposalFile,
+        ktpFile,
+      });
+
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_SERVER}/api/magang`,
         formData,
@@ -545,7 +553,7 @@ export default function FormulirPenelitian() {
       setIsLoading(false);
 
       if (response?.status === 200) {
-        toast.success("Data Anda berhasil disimpan!", {
+        toast.success("Terima kasih, data ajuan Anda berhasil disimpan!", {
           icon: null,
           style: {
             background: "#28A745",
@@ -563,19 +571,23 @@ export default function FormulirPenelitian() {
         }, 3000);
       }
     } catch (error) {
-      toast.error("Terjadi kesalahan saat menyimpan data. Silakan coba lagi.", {
-        icon: null,
-        style: {
-          background: "#FF0000",
-          color: "#FFFFFF",
-          borderRadius: "12px",
-          fontSize: "14px",
-          textAlign: "center",
-          maxWidth: "900px",
-        },
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error(
+        "Maaf, terjadi kesalahan saat menyimpan data. Silakan coba lagi.",
+        {
+          icon: null,
+          style: {
+            background: "#FF0000",
+            color: "#FFFFFF",
+            borderRadius: "12px",
+            fontSize: "14px",
+            textAlign: "center",
+            maxWidth: "900px",
+          },
+          position: "top-center",
+          duration: 3000,
+        }
+      );
+      setIsLoading(false); // Hilangkan Loader jika terjadi error
       console.log(
         "Cek error: ",
         error.response?.data,
@@ -1101,24 +1113,26 @@ export default function FormulirPenelitian() {
                     Surat Pengantar Instansi/Lembaga
                   </span>
                 </div>
-                <input
-                  type="file"
-                  name="suratPermohonan"
-                  className="form-file-input w-full md:w-2/5 text-sm"
-                  onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                />
-                {isSuratPermohonanChecked && suratPermohonanFile && (
-                  <a
-                    href={suratPermohonanPreview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
-                  >
-                    <FaEye size={20} className="mr-1" />
-                    Pratinjau File
-                  </a>
-                )}
+                <div className="flex items-center w-full md:w-2/5">
+                  <input
+                    type="file"
+                    name="suratPermohonan"
+                    className="form-file-input w-full text-sm"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  />
+                  {isSuratPermohonanChecked && suratPermohonanFile && (
+                    <a
+                      href={suratPermohonanPreview}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center ml-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                    >
+                      <FaEye size={20} className="mr-1" />
+                      Pratinjau
+                    </a>
+                  )}
+                </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center mb-2 md:mb-0">
@@ -1131,24 +1145,26 @@ export default function FormulirPenelitian() {
                   />
                   <span className="text-sm md:text-base">Proposal</span>
                 </div>
-                <input
-                  type="file"
-                  name="proposal"
-                  className="form-file-input w-full md:w-2/5 text-sm"
-                  onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx"
-                />
-                {isProposalChecked && proposalFile && (
-                  <a
-                    href={proposalPreview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
-                  >
-                    <FaEye size={20} className="mr-1" />
-                    Pratinjau File
-                  </a>
-                )}
+                <div className="flex items-center w-full md:w-2/5">
+                  <input
+                    type="file"
+                    name="proposal"
+                    className="form-file-input w-full text-sm"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx"
+                  />
+                  {isProposalChecked && proposalFile && (
+                    <a
+                      href={proposalPreview}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center ml-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                    >
+                      <FaEye size={20} className="mr-1" />
+                      Pratinjau
+                    </a>
+                  )}
+                </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center mb-2 md:mb-0">
@@ -1166,24 +1182,26 @@ export default function FormulirPenelitian() {
                     KTP/Identitas (Seluruh Anggota)
                   </span>
                 </div>
-                <input
-                  type="file"
-                  name="ktp"
-                  className="form-file-input w-full md:w-2/5 text-sm"
-                  onChange={handleFileChange}
-                  accept=".pdf,.jpg,.jpeg,.png"
-                />
-                {isKTPChecked && ktpFile && (
-                  <a
-                    href={ktpPreview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center mt-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
-                  >
-                    <FaEye size={20} className="mr-1" />
-                    Pratinjau File
-                  </a>
-                )}
+                <div className="flex items-center w-full md:w-2/5">
+                  <input
+                    type="file"
+                    name="ktp"
+                    className="form-file-input w-full text-sm"
+                    onChange={handleFileChange}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                  />
+                  {isKTPChecked && ktpFile && (
+                    <a
+                      href={ktpPreview}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center ml-2 text-[#003285] hover:text-[#86B6F6] hover:underline text-sm md:text-base"
+                    >
+                      <FaEye size={20} className="mr-1" />
+                      Pratinjau
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
