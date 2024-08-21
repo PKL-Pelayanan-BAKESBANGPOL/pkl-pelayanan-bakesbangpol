@@ -2,15 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
-import FAQBackground from "./assets/FAQ Background.png";
-import Footer from "./Footer";
-import ScrollUp from "./ScrollUp";
-import Image6 from "./assets/Image 6.png";
-import Image7 from "./assets/Image 7.png";
-import Image8 from "./assets/Image 8.png";
-import Image9 from "./assets/Image 9.png";
+import Footer from "../assets/components/Footer";
+import ScrollUp from "../assets/components/ScrollUp";
+import FAQBackground from "../assets/images/FAQ Background.png";
+import Image6 from "../assets/images/Image 6.png";
+import Image7 from "../assets/images/Image 7.png";
+import Image8 from "../assets/images/Image 8.png";
+import Image9 from "../assets/images/Image 9.png";
 
-export default function PanduanPenelitian() {
+export default function PanduanAjuan() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (

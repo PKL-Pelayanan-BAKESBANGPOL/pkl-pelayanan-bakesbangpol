@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
-import ScrollUp from "./ScrollUp";
+import Footer from "../assets/components/Footer";
+import ScrollUp from "../assets/components/ScrollUp";
 
 export default function ProsesAjuan() {
   const navigate = useNavigate();

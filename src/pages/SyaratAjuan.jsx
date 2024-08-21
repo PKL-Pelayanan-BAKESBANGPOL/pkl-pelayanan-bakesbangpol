@@ -2,16 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { IoIosArrowBack, IoMdArrowRoundBack } from "react-icons/io";
-import Header from "./assets/Header.png";
-import Footer from "./Footer";
-import ScrollUp from "./ScrollUp";
-import Image1 from "./assets/Image 1.png";
-import Image2 from "./assets/Image 2.png";
-import Image3 from "./assets/Image 3.png";
-import Image4 from "./assets/Image 4.png";
-import Image5 from "./assets/Image 5.png";
+import Footer from "../assets/components/Footer";
+import ScrollUp from "../assets/components/ScrollUp";
+import Header from "../assets/images/Header.png";
+import Image1 from "../assets/images/Image 1.png";
+import Image2 from "../assets/images/Image 2.png";
+import Image3 from "../assets/images/Image 3.png";
+import Image4 from "../assets/images/Image 4.png";
+import Image5 from "../assets/images/Image 5.png";
 
-export default function SyaratPenelitian() {
+export default function SyaratAjuan() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (

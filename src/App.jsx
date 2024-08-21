@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Beranda from "./Beranda";
-import SyaratPenelitian from "./SyaratPenelitian";
-import PanduanPenelitian from "./PanduanPenelitian";
-import FormulirPenelitian from "./FormulirPenelitian";
-import FormulirMagang from "./FormulirMagang";
-import ProsesAjuan from "./ProsesAjuan";
-import TidakDitemukan from "./TidakDitemukan";
-import LayananKonsultasi from "./LayananKonsultasi";
+import Beranda from "./pages/Beranda";
+import LayananAjuan from "./pages/LayananAjuan";
+import SyaratAjuan from "./pages/SyaratAjuan";
+import PanduanAjuan from "./pages/PanduanAjuan";
+import FormulirPenelitian from "./pages/FormulirPenelitian";
+import FormulirMagang from "./pages/FormulirMagang";
+import ProsesAjuan from "./pages/ProsesAjuan";
+import TidakDitemukan from "./assets/components/TidakDitemukan";
 
 export default function App() {
   return (
@@ -16,15 +16,15 @@ export default function App() {
         <Route path="/" element={<Beranda />} />
         <Route
           path="/persyaratan-perizinan-rekomendasi-penelitian"
-          element={<SyaratPenelitian />}
+          element={<SyaratAjuan />}
         />
         <Route
           path="/panduan-perizinan-rekomendasi-penelitian"
-          element={<PanduanPenelitian />}
+          element={<PanduanAjuan />}
         />
         <Route
           path="/layanan-konsultasi-penelitian"
-          element={<LayananKonsultasi />}
+          element={<LayananAjuan />}
         />
         <Route
           path="/formulir-penelitian/survei/observasi/skripsi/tesis/desertasi"

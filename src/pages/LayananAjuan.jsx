@@ -8,12 +8,12 @@ import {
   FaPhone,
   FaInstagram,
 } from "react-icons/fa";
-import FAQBackground from "./assets/FAQ Background.png";
-import Footer from "./Footer";
-import ScrollUp from "./ScrollUp";
-import JadwalLayananKonsultasi from "./assets/Jadwal Layanan Konsultasi.png";
+import Footer from "../assets/components/Footer";
+import ScrollUp from "../assets/components/ScrollUp";
+import FAQBackground from "../assets/images/FAQ Background.png";
+import JadwalLayananKonsultasi from "../assets/images/Jadwal Layanan Konsultasi.png";
 
-export default function LayananKonsultasi() {
+export default function LayananAjuan() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (
@@ -27,7 +27,7 @@ export default function LayananKonsultasi() {
           }}
         >
           <h2 className="text-xl md:text-2xl font-bold">
-            Layanan Konsultasi Permohonan Rekomendasi Magang/Penelitian <br />
+            Layanan Permohonan Rekomendasi Magang/Penelitian <br />
             BAKESBANGPOL Provinsi Jawa Timur
           </h2>
         </div>
@@ -55,7 +55,7 @@ export default function LayananKonsultasi() {
         <div className="bg-[#EEF5FF]">
           <div className="text-center">
             <h2 className="text-xl md:text-2xl font-bold text-[#003285] px-4">
-              Jadwal Layanan Konsultasi
+              Jadwal Layanan Ajuan
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-8 p-4 md:px-10 m-4 max-w-6xl mx-auto">
@@ -67,12 +67,11 @@ export default function LayananKonsultasi() {
               />
               <div>
                 <h3 className="text-xl md:text-2xl font-semibold mb-4">
-                  Jadwal Layanan Konsultasi Permohonan Rekomendasi
-                  Penelitian/Magang
+                  Jadwal Layanan Ajuan Permohonan Rekomendasi Penelitian/Magang
                 </h3>
                 <div className="h-0.5 bg-gradient-to-r from-blue-500 to-green-500 mb-4"></div>
                 <p className="text-sm md:text-base">
-                  Kami melayani konsultasi pada hari:
+                  Kami melayani ajuan permohonan pada hari:
                 </p>
                 <ul className="list-disc list-inside ml-5 mt-2">
                   <li className="text-sm md:text-base">
