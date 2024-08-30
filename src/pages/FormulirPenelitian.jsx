@@ -580,27 +580,27 @@ export default function FormulirPenelitian() {
         formData.append("ktpFile", ktpFile);
       }
 
-      // Mengecek data yang dikirim
-      console.log("Data ajuan penelitian:", {
-        letterNumber,
-        name,
-        researcherName,
-        address,
-        inputValue,
-        institution,
-        occupation,
-        judulPenelitian,
-        researchField,
-        tujuanPenelitian,
-        supervisorName,
-        teamMembers,
-        researchPeriod,
-        statusPenelitian,
-        researchLocation,
-        suratPengantarFile,
-        proposalFile,
-        ktpFile,
-      });
+      // // Mengecek data yang dikirim
+      // console.log("Data ajuan penelitian:", {
+      //   letterNumber,
+      //   name,
+      //   researcherName,
+      //   address,
+      //   inputValue,
+      //   institution,
+      //   occupation,
+      //   judulPenelitian,
+      //   researchField,
+      //   tujuanPenelitian,
+      //   supervisorName,
+      //   teamMembers,
+      //   researchPeriod,
+      //   statusPenelitian,
+      //   researchLocation,
+      //   suratPengantarFile,
+      //   proposalFile,
+      //   ktpFile,
+      // });
 
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_SERVER}/api/penelitian`,
@@ -650,12 +650,12 @@ export default function FormulirPenelitian() {
         }
       );
       setIsLoading(false); // Hilangkan Loader jika terjadi error
-      console.log(
-        "Cek error: ",
-        error.response?.data,
-        error.response?.status,
-        error.message
-      );
+      // console.log(
+      //   "Cek error: ",
+      //   error.response?.data,
+      //   error.response?.status,
+      //   error.message
+      // );
     }
   };
 
@@ -680,7 +680,7 @@ export default function FormulirPenelitian() {
       </div>
 
       {/* Back Button */}
-      <div className={`ml-5 pt-1 ${isMobile ? "mb-5" : "mb-10 lg:w-1/12"}`}>
+      <div className={`ml-4 pt-1 ${isMobile ? "mb-5" : "mb-10 lg:w-1/12"}`}>
         <Link to="/persyaratan-perizinan-rekomendasi-penelitian">
           <div className="flex font-medium items-center text-[#003285] hover:text-[#40A2E3] cursor-pointer">
             {isMobile ? (

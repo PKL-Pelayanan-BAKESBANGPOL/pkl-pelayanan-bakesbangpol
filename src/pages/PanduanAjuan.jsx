@@ -29,7 +29,7 @@ export default function PanduanAjuan() {
         </div>
 
         {/* Back Button */}
-        <div className={`ml-5 pt-1 ${isMobile ? "mb-5" : "mb-10 lg:w-1/12"}`}>
+        <div className={`ml-4 pt-1 ${isMobile ? "mb-5" : "mb-10 lg:w-1/12"}`}>
           <Link to="/">
             <div className="flex font-medium items-center text-[#003285] hover:text-[#40A2E3] cursor-pointer">
               {isMobile ? (

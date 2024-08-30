@@ -24,10 +24,6 @@ export default function SyaratAjuan() {
           alt="Header Image"
         />
         <div className="relative flex flex-col items-center justify-center text-center z-10 p-8 m-4 bg-white bg-opacity-75 rounded-lg shadow-lg max-w-4xl">
-          {/* <h1 className="text-2xl md:text-3xl font-bold mb-10">
-            PERSYARATAN PERIZINAN REKOMENDASI <br />
-            PENELITIAN DI PROVINSI JAWA TIMUR
-          </h1> */}
           <h1 className="text-xl md:text-3xl font-bold">
             PERSYARATAN PERIZINAN REKOMENDASI PENELITIAN
           </h1>
@@ -91,7 +87,7 @@ export default function SyaratAjuan() {
 
       <div className="bg-[#EEF5FF]">
         {/* Back Button */}
-        <div className={`ml-5 pt-5 ${isMobile ? "mb-1" : "mb-10 lg:w-1/12"}`}>
+        <div className={`ml-4 pt-5 ${isMobile ? "mb-1" : "mb-10 lg:w-1/12"}`}>
           <Link to="/">
             <div className="flex font-medium items-center text-[#003285] hover:text-[#40A2E3] cursor-pointer">
               {isMobile ? (
@@ -221,7 +217,7 @@ export default function SyaratAjuan() {
                 Lembaga/PT Melakukan Penelitian di Jawa Timur
               </h3>
               <div className="h-0.5 bg-gradient-to-r from-blue-500 to-green-500 mb-4"></div>
-              <ol className="list-decimal list-inside">
+              <ol className="text-sm md:text-base list-decimal list-inside">
                 <li>
                   Rekomendasi dari Dirjen Kesbang & Pol Kemendagri Jakarta
                   (ASLI)
